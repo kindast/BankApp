@@ -1,0 +1,60 @@
+﻿<Page x:Class="BankApp.Pages.PgRegister"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BankApp.Pages" xmlns:uc="clr-namespace:BankApp.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="500"
+      Title="PgRegister">
+
+    <Grid x:Name="Grid" Background="{StaticResource WindowBackground}">
+        <StackPanel VerticalAlignment="Center"
+                    Width="330">
+            <Image Source="/Images/Logo.png" MaxWidth="150" MaxHeight="55" HorizontalAlignment="Center"
+                   Margin="0,0,0,20"/>
+            <TextBlock Text="Регистрация" Style="{StaticResource TitleTextBlock}"
+                       Margin="0,0,0,10"/>
+            <TextBlock Text="Фамилия" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <TextBox x:Name="tbLastName"
+                     Style="{StaticResource BaseTextBox}"
+                     Margin="0,0,0,10" PreviewTextInput="tbLastName_PreviewTextInput" PreviewKeyDown="tbLastName_PreviewKeyDown"/>
+            <TextBlock Text="Имя" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <TextBox x:Name="tbFirstName"
+                     Style="{StaticResource BaseTextBox}"
+                     Margin="0,0,0,10" PreviewTextInput="tbLastName_PreviewTextInput" PreviewKeyDown="tbLastName_PreviewKeyDown"/>
+            <TextBlock Text="Отчество" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <TextBox x:Name="tbMiddleName"
+                     Style="{StaticResource BaseTextBox}"
+                     Margin="0,0,0,10" PreviewTextInput="tbLastName_PreviewTextInput" PreviewKeyDown="tbLastName_PreviewKeyDown"/>
+            <TextBlock Text="Логин" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <TextBox x:Name="tbLogin"
+                     Style="{StaticResource BaseTextBox}"
+                     Margin="0,0,0,10"/>
+            <TextBlock Text="Пароль" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <uc:CustomPasswordBox x:Name="tbPassword" Margin="0,0,0,10"/>
+            <TextBlock Text="Повторите пароль" Style="{StaticResource BaseTextBlock}"
+                       Margin="0,0,0,3"/>
+            <uc:CustomPasswordBox x:Name="tbPasswordRepeat" Margin="0,0,0,10"/>
+            <Button Content="Зарегистрироваться" Style="{StaticResource BaseButton}"
+                    Margin="0,0,0,10" Click="Register"/>
+            <Grid HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="У вас уже есть аккаунт?"
+                       Style="{StaticResource BaseTextBlock}"/>
+                <TextBlock Text="Войти"
+                       Style="{StaticResource LinkTextBlock}"
+                       Grid.Column="1" Cursor="Hand" Margin="10,0,0,0"
+                       MouseDown="OpenLoginPage"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Page>
