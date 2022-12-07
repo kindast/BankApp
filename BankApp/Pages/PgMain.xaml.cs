@@ -59,6 +59,7 @@ namespace BankApp.Pages
             {
                 ShowMessageBox(ex.Message);
             }
+            tbCardName.Text = String.Empty;
             LoadCards();
         }
 
@@ -66,7 +67,7 @@ namespace BankApp.Pages
         {
             try
             {
-                bank.DeleteCard(cbCardSelection1.SelectedIndex);
+                bank.DeleteCard(cbCardSelection.SelectedIndex);
             }
             catch (Exception ex)
             {
@@ -82,7 +83,8 @@ namespace BankApp.Pages
                 ShowMessageBox("Введите сумму пополнения");
                 return;
             }
-            bank.AddMoney(cbCardSelection1.SelectedIndex, double.Parse(tbMoney.Text));
+            bank.AddMoney(cbCardSelection.SelectedIndex, double.Parse(tbMoney.Text));
+            tbMoney.Text = String.Empty;
             LoadCards();
         }
 
@@ -95,12 +97,13 @@ namespace BankApp.Pages
             }
             try
             {
-                bank.WithdrawMoney(cbCardSelection1.SelectedIndex, double.Parse(tbMoney.Text));
+                bank.WithdrawMoney(cbCardSelection.SelectedIndex, double.Parse(tbMoney.Text));
             }
             catch (Exception ex)
             {
                 ShowMessageBox(ex.Message);
             }
+            tbMoney.Text = String.Empty;
             LoadCards();
         }
 
@@ -118,27 +121,32 @@ namespace BankApp.Pages
             }
             try
             {
-                bank.Transfer(cbCardSelection1.SelectedIndex, tbCardNumber.Text, double.Parse(tbMoney.Text));
+                bank.Transfer(cbCardSelection.SelectedIndex, tbCardNumber.Text, double.Parse(tbMoney.Text));
             }
             catch (Exception ex)
             {
                 ShowMessageBox(ex.Message);
             }
+            tbCardNumber.Text = String.Empty; 
+            tbMoney.Text = String.Empty;
             LoadCards();
         }
 
         private void LoadCards()
         {
             spCards.Children.Clear();
-            cbCardSelection1.Items.Clear();
-            cbCardSelection2.Items.Clear();
+            cbCardSelection.Items.Clear();
             foreach (var card in bank.CurrentUser.BankCards)
             {
                 spCards.Children.Add(new CardControl(card.Name, card.Number, $"{card.Balance}₽") { Margin = new Thickness(5), Width = spCards.Width });
-                cbCardSelection1.Items.Add($"{card.Name} ({card.Balance}₽)");
-                cbCardSelection2.Items.Add($"{card.Name} ({card.Balance}₽)");
+                cbCardSelection.Items.Add($"{card.Name} ({card.Balance}₽)");
             }
-            cbCardSelection1.SelectedIndex = 0;
+            cbCardSelection.SelectedIndex = 0;
+
+            if (bank.CurrentUser.BankCards.Count == 0)
+                tbMyCards.Visibility = Visibility.Collapsed;
+            else
+                tbMyCards.Visibility = Visibility.Visible;
         }
 
         private void cbMoney_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -161,6 +169,12 @@ namespace BankApp.Pages
                 e.Handled = true;
         }
 
+        private void tbCardNumber_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+                e.Handled = true;
+        }
+
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBox listBox = sender as ListBox;
@@ -171,8 +185,7 @@ namespace BankApp.Pages
             tbCardNumberLabel.Visibility = Visibility.Collapsed;
             tbCardName.Visibility = Visibility.Collapsed;
             btnOpenCard.Visibility = Visibility.Collapsed;
-            cbCardSelection1.Visibility = Visibility.Collapsed;
-            cbCardSelection2.Visibility = Visibility.Collapsed;
+            cbCardSelection.Visibility = Visibility.Collapsed;
             btnDeleteCard.Visibility = Visibility.Collapsed;
             tbMoney.Visibility = Visibility.Collapsed;
             tbCardNumber.Visibility = Visibility.Collapsed;
@@ -190,13 +203,13 @@ namespace BankApp.Pages
 
                 case 1:
                     tbCardSelectionLabel.Visibility = Visibility.Visible;
-                    cbCardSelection1.Visibility = Visibility.Visible;
+                    cbCardSelection.Visibility = Visibility.Visible;
                     btnDeleteCard.Visibility = Visibility.Visible;
                     break;
 
                 case 2:
                     tbCardSelectionLabel.Visibility = Visibility.Visible;
-                    cbCardSelection1.Visibility = Visibility.Visible;
+                    cbCardSelection.Visibility = Visibility.Visible;
                     tbMoneyLabel.Visibility = Visibility.Visible;
                     tbMoney.Visibility = Visibility.Visible;
                     btnAddMoney.Visibility = Visibility.Visible;
@@ -204,7 +217,7 @@ namespace BankApp.Pages
 
                 case 3:
                     tbCardSelectionLabel.Visibility = Visibility.Visible;
-                    cbCardSelection1.Visibility = Visibility.Visible;
+                    cbCardSelection.Visibility = Visibility.Visible;
                     tbMoneyLabel.Visibility = Visibility.Visible;
                     tbMoney.Visibility = Visibility.Visible;
                     btnWithdrawMoney.Visibility = Visibility.Visible;
@@ -212,7 +225,7 @@ namespace BankApp.Pages
 
                 case 4:
                     tbCardSelectionLabel.Visibility = Visibility.Visible;
-                    cbCardSelection1.Visibility = Visibility.Visible;
+                    cbCardSelection.Visibility = Visibility.Visible;
                     tbMoneyLabel.Visibility = Visibility.Visible;
                     tbMoney.Visibility = Visibility.Visible;
                     tbCardNumberLabel.Visibility = Visibility.Visible;
@@ -223,6 +236,13 @@ namespace BankApp.Pages
                 case 5:
                     break;
             }
+        }
+
+        private void OpenTransactions(object sender, RoutedEventArgs e)
+        {
+            WndTransactions transactions = new WndTransactions();
+            transactions.bank = bank;
+            transactions.ShowDialog();
         }
     }
 }

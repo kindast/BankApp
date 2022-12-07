@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,7 @@ namespace BankApp.Model
 
         public void Register(string lastName, string firstName, string middleName, string login, string password)
         {
-            User user = new User(lastName, firstName, middleName, login, password, new List<BankCard>());
+            User user = new User(lastName, firstName, middleName, login, password, new List<BankCard>(), new List<Transaction>());
             users.Add(user);
             SaveUsers();
         }
@@ -57,7 +58,13 @@ namespace BankApp.Model
         public void CreateCard(string cardName)
         {
             if (CurrentUser.BankCards.Count >= 3)
-                throw new Exception("В нашем банке можно иметь только 5 счетов");
+                throw new Exception("В нашем банке можно иметь только 3 счёта");
+
+            foreach (var card in CurrentUser.BankCards)
+            {
+                if (card.Name == cardName)
+                    throw new Exception("Карта с таким именем уже есть");
+            }
 
             StringBuilder number = new StringBuilder();
             Random random = new Random();
@@ -66,11 +73,25 @@ namespace BankApp.Model
 
             BankCard bankCard = new BankCard(cardName, number.ToString(), 0);
             CurrentUser.BankCards.Add(bankCard);
+
+            string transactionText = $"MyBank | Открытие счёта\n" +
+                $"ФИО клиента: {CurrentUser.LastName} {CurrentUser.FirstName} {CurrentUser.MiddleName}\n" +
+                $"Название нового счёта: {CurrentUser.BankCards[CurrentUser.BankCards.Count - 1].Name}\n" +
+                $"Номер нового счёта: {CurrentUser.BankCards[CurrentUser.BankCards.Count - 1].Number}\n" +
+                $"Дата совершения операции: {DateTime.Now}";
+            CurrentUser.Transactions.Add(new Transaction("Открытие счёта", transactionText, DateTime.Now));
             SaveUsers();
         }
 
         public void DeleteCard(int indexCard)
         {
+            string transactionText = $"MyBank | Закрытие счёта\n" +
+                $"ФИО клиента: {CurrentUser.LastName} {CurrentUser.FirstName} {CurrentUser.MiddleName}\n" +
+                $"Название счёта: {CurrentUser.BankCards[indexCard].Name}\n" +
+                $"Номер счёта: {CurrentUser.BankCards[indexCard].Number}\n" +
+                $"Дата совершения операции: {DateTime.Now}";
+            CurrentUser.Transactions.Add(new Transaction("Закрытие счёта", transactionText, DateTime.Now));
+
             CurrentUser.BankCards.RemoveAt(indexCard);
             SaveUsers();
         }
@@ -78,6 +99,14 @@ namespace BankApp.Model
         public void AddMoney(int indexCard, double money)
         {
             CurrentUser.BankCards[indexCard].Balance += Math.Round(money, 2);
+            string transactionText = $"MyBank | Пополнение счёта\n" +
+                $"ФИО клиента: {CurrentUser.LastName} {CurrentUser.FirstName} {CurrentUser.MiddleName}\n" +
+                $"Название счёта: {CurrentUser.BankCards[indexCard].Name}\n" +
+                $"Номер счёта: {CurrentUser.BankCards[indexCard].Number}\n" +
+                $"Сумма до пополнения счёта: {CurrentUser.BankCards[indexCard].Balance - Math.Round(money, 2)}₽\n" +
+                $"Сумма после пополнения счёта: {CurrentUser.BankCards[indexCard].Balance}₽\n" +
+                $"Дата совершения операции: {DateTime.Now}";
+            CurrentUser.Transactions.Add(new Transaction("Пополнение счёта", transactionText, DateTime.Now));
             SaveUsers();
         }
 
@@ -87,6 +116,14 @@ namespace BankApp.Model
                 CurrentUser.BankCards[indexCard].Balance -= Math.Round(money, 2);
             else
                 throw new Exception("Недостаточно средств");
+            string transactionText = $"MyBank | Вывод средств с счёта\n" +
+                $"ФИО клиента: {CurrentUser.LastName} {CurrentUser.FirstName} {CurrentUser.MiddleName}\n" +
+                $"Название счёта: {CurrentUser.BankCards[indexCard].Name}\n" +
+                $"Номер счёта: {CurrentUser.BankCards[indexCard].Number}\n" +
+                $"Сумма до вывода средств: {CurrentUser.BankCards[indexCard].Balance + Math.Round(money, 2)}₽\n" +
+                $"Сумма после вывода средств: {CurrentUser.BankCards[indexCard].Balance}₽\n" +
+                $"Дата совершения операции: {DateTime.Now}";
+            CurrentUser.Transactions.Add(new Transaction("Вывод средств с счёта", transactionText, DateTime.Now));
             SaveUsers();
         }
 
@@ -102,6 +139,15 @@ namespace BankApp.Model
                     {
                         card.Balance += Math.Round(money, 2);
                         CurrentUser.BankCards[indexCard].Balance -= Math.Round(money, 2);
+                        string transactionText = $"MyBank | Вывод средств с счёта\n" +
+                            $"ФИО клиента: {CurrentUser.LastName} {CurrentUser.FirstName} {CurrentUser.MiddleName}\n" +
+                            $"Название счёта: {CurrentUser.BankCards[indexCard].Name}\n" +
+                            $"Номер счёта: {CurrentUser.BankCards[indexCard].Number}\n" +
+                            $"Переведено на карту: {cardNumber}\n" +
+                            $"Сумма до перевода средств: {CurrentUser.BankCards[indexCard].Balance + Math.Round(money, 2)}₽\n" +
+                            $"Сумма после перевода средств: {CurrentUser.BankCards[indexCard].Balance}₽\n" +
+                            $"Дата совершения операции: {DateTime.Now}";
+                        CurrentUser.Transactions.Add(new Transaction("Вывод средств с счёта", transactionText, DateTime.Now));
                         SaveUsers();
                         return;
                     }
