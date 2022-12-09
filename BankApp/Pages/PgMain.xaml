@@ -41,47 +41,69 @@
                     </DrawingImage>
                 </Image.Source>
             </Image>
-            <Button  Grid.Column="1" Content="История операций" Style="{StaticResource BaseButton}" Click="OpenTransactions"/>
+            
             <TextBlock x:Name="tbUserName" Style="{StaticResource BaseTextBlock}" TextAlignment="Right"
                        Grid.Column="2"/>
-            <Button Content="Выйти" Style="{StaticResource BaseButton}" Click="LogOut" 
+            <Button Style="{StaticResource WhiteButton}" Click="LogOut" 
                     Grid.Column="3" Cursor="Hand" FontSize="16" FontWeight="Regular"
-                    Margin="5"/>
+                    Margin="5">
+                <Button.Content>
+                    <Image>
+                        <Image.Source>
+                            <DrawingImage>
+                                <DrawingImage.Drawing>
+                                    <DrawingGroup ClipGeometry="M0,0 V490.3 H490.3 V0 H0 Z">
+                                        <DrawingGroup Opacity="1">
+                                            <DrawingGroup Opacity="1">
+                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M490.3,490.3z M0,0z M0,121.05L0,369.25C0,403.45,27.9,431.35,62.1,431.35L262.7,431.35C296.9,431.35,324.8,403.45,324.8,369.25L324.8,329.05C324.8,322.25 319.3,316.75 312.5,316.75 305.7,316.75 300.2,322.25 300.2,329.05L300.2,369.25C300.2,389.95,283.3,406.85,262.6,406.85L62.1,406.85C41.4,406.85,24.5,389.95,24.5,369.25L24.5,121.05C24.5,100.35,41.4,83.45,62.1,83.45L262.7,83.45C283.4,83.45,300.3,100.35,300.3,121.05L300.3,161.25C300.3,168.05 305.8,173.55 312.6,173.55 319.4,173.55 324.9,168.05 324.9,161.25L324.9,121.05C324.9,86.85,297,58.95,262.8,58.95L62.1,58.95C27.9,58.95,0,86.75,0,121.05z" />
+                                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M490.3,490.3z M0,0z M385.4,337.65C387.8,340.05 390.9,341.25 394.1,341.25 397.3,341.25 400.4,340.05 402.8,337.65L486.7,253.75C491.5,248.95,491.5,241.25,486.7,236.45L402.8,152.55C398,147.75 390.3,147.75 385.5,152.55 380.7,157.35 380.7,165.05 385.5,169.85L448.5,232.85 218.6,232.85C211.8,232.85 206.3,238.35 206.3,245.15 206.3,251.95 211.8,257.45 218.6,257.45L448.4,257.45 385.4,320.45C380.6,325.15,380.6,332.95,385.4,337.65z" />
+                                            </DrawingGroup>
+                                        </DrawingGroup>
+                                    </DrawingGroup>
+                                </DrawingImage.Drawing>
+                            </DrawingImage>
+                        </Image.Source>
+                    </Image>
+                </Button.Content>
+            </Button>
         </Grid>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock x:Name="tbMyCards" Text="Мои счета" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlock}"/>
-            <StackPanel x:Name="spCards"/>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+            <StackPanel>
+                <TextBlock x:Name="tbMyCards" Text="Мои счета" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlock}"/>
+                <Button  Grid.Column="1" Content="История операций" Style="{StaticResource BaseButton}" Click="OpenTransactions" Margin="5"/>
+                <StackPanel x:Name="spCards"/>
 
-            <TextBlock Text="Операции" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlock}"/>
-            <ListBox x:Name="lbOperations" SelectionChanged="ListBox_SelectionChanged">
-                <ListBoxItem Content="Открыть новый счёт" FontSize="15"/>
-                <ListBoxItem Content="Закрыть счёт" FontSize="15"/>
-                <ListBoxItem Content="Пополнить счёт" FontSize="15"/>
-                <ListBoxItem Content="Вывести деньги с счёта" FontSize="15"/>
-                <ListBoxItem Content="Перевести деньги на другую карту" FontSize="15"/>
-            </ListBox>
+                <TextBlock Text="Операции" HorizontalAlignment="Center" Style="{StaticResource BaseTextBlock}"/>
+                <ListBox x:Name="lbOperations" SelectionChanged="ListBox_SelectionChanged" Style="{StaticResource BaseListBox}">
+                    <ListBoxItem Content="Открыть новую карту" FontSize="15"/>
+                    <ListBoxItem Content="Закрыть карту" FontSize="15"/>
+                    <ListBoxItem Content="Пополнить карту" FontSize="15"/>
+                    <ListBoxItem Content="Снять деньги с карты" FontSize="15"/>
+                    <ListBoxItem Content="Перевести деньги по номеру карты" FontSize="15"/>
+                </ListBox>
 
-            <TextBlock x:Name="tbCardNameLabel" Text="Название карты" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
-            <TextBox x:Name="tbCardName" Style="{StaticResource BaseTextBox}" Margin="5,0,5,10" MaxLength="20"/>
-            <Button x:Name="btnOpenCard" Content="Открыть новый счёт" Style="{StaticResource BaseButton}" 
+                <TextBlock x:Name="tbCardNameLabel" Text="Название карты" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
+                <TextBox x:Name="tbCardName" Style="{StaticResource BaseTextBox}" Margin="5,0,5,10" MaxLength="20"/>
+                <Button x:Name="btnOpenCard" Content="Открыть новую карту" Style="{StaticResource BaseButton}" 
                             Click="OpenNewCard" Margin="5,0,5,0" FontWeight="Regular" Cursor="Hand"/>
-            <TextBlock x:Name="tbCardSelectionLabel" Text="Карта" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
-            <ComboBox x:Name="cbCardSelection" Margin="5,0,5,10"/>
-            <Button x:Name="btnDeleteCard" Content="Закрыть счёт" Style="{StaticResource BaseButton}" 
+                <TextBlock x:Name="tbCardSelectionLabel" Text="Карта" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
+                <ComboBox x:Name="cbCardSelection" Margin="5,0,5,10"/>
+                <Button x:Name="btnDeleteCard" Content="Закрыть карту" Style="{StaticResource BaseButton}" 
                             Click="DeleteCard" Margin="5,0,5,0" FontWeight="Regular"/>
-            <TextBlock x:Name="tbMoneyLabel" Text="Сумма" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
-            <TextBox x:Name="tbMoney" Style="{StaticResource BaseTextBox}" PreviewKeyDown="cbMoney_PreviewKeyDown" 
+                <TextBlock x:Name="tbMoneyLabel" Text="Сумма" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
+                <TextBox x:Name="tbMoney" Style="{StaticResource BaseTextBox}" PreviewKeyDown="cbMoney_PreviewKeyDown" 
                              PreviewTextInput="cbMoney_PreviewTextInput" Margin="5,0,5,10" MaxLength="20"/>
-            <TextBlock x:Name="tbCardNumberLabel" Text="Номер карты" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
-            <TextBox x:Name="tbCardNumber" Style="{StaticResource BaseTextBox}" PreviewTextInput="tbCardNumber_PreviewTextInput" 
+                <TextBlock x:Name="tbCardNumberLabel" Text="Номер карты" Style="{StaticResource BaseTextBlock}" Margin="5,0,0,3"/>
+                <TextBox x:Name="tbCardNumber" Style="{StaticResource BaseTextBox}" PreviewTextInput="tbCardNumber_PreviewTextInput" 
                              PreviewKeyDown="tbCardNumber_PreviewKeyDown"  MaxLength="16" Margin="5,0,5,10"/>
-            <Button x:Name="btnTransfer" Content="Перевести на другую карту" Style="{StaticResource BaseButton}" 
+                <Button x:Name="btnTransfer" Content="Перевести" Style="{StaticResource BaseButton}" 
                             Click="Transfer" Margin="5,0,5,0" FontWeight="Regular"/>
-            <Button x:Name="btnAddMoney" Content="Пополнить счёт" Style="{StaticResource BaseButton}" FontWeight="Regular"
+                <Button x:Name="btnAddMoney" Content="Пополнить" Style="{StaticResource BaseButton}" FontWeight="Regular"
                             Click="AddMoney" Cursor="Hand" Margin="5,0,5,0"/>
-            <Button x:Name="btnWithdrawMoney" Content="Вывести деньги с счёта" Style="{StaticResource BaseButton}" FontWeight="Regular"
+                <Button x:Name="btnWithdrawMoney" Content="Снять" Style="{StaticResource BaseButton}" FontWeight="Regular"
                             Click="WithdrawMoney" Cursor="Hand" Margin="5,0,5,0"/>
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

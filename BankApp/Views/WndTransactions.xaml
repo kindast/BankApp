@@ -5,19 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp.Views"
         mc:Ignorable="d"
-        Title="История операций" Height="450" Width="600" Loaded="Window_Loaded">
+        Title="История операций" Height="390" Width="700" Loaded="Window_Loaded" 
+        WindowStartupLocation="CenterOwner" Background="{StaticResource WindowBackground}"
+         MinWidth="700" MinHeight="390">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <TextBlock Text="Последние операции" Style="{StaticResource BaseTextBlock}" Margin="10"/>
-            <ListBox x:Name="lbTransactions" SelectionChanged="lbTransactions_SelectionChanged"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1">
-            <TextBlock x:Name="tbTextTransaction"/>
-            <Button Content="Сохранить в файл" Style="{StaticResource BaseButton}" Width="200"/>
-        </StackPanel>
+        <Border Grid.Column="0" CornerRadius="10" Margin="10" Background="White">
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Последние операции" Style="{StaticResource BaseTextBlock}" Margin="10,5,10,5"
+                       HorizontalAlignment="Center"/>
+                <ListBox x:Name="lbTransactions" SelectionChanged="lbTransactions_SelectionChanged" 
+                         Style="{StaticResource BaseListBox}" HorizontalAlignment="Left"
+                         FontSize="14" Margin="0"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Column="1" CornerRadius="10" Margin="10" Background="White">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0, 20" >
+                <TextBlock Text="Квитанция" Style="{StaticResource BaseTextBlock}" Margin="0,0,0,10" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="tbTextTransaction" Style="{StaticResource BaseTextBlock}"/>
+                <Button Content="Сохранить в файл" Style="{StaticResource BaseButton}" Click="Button_Click" Width="200" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>
