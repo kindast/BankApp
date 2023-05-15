@@ -1,0 +1,90 @@
+﻿<Page x:Class="BankApp.Views.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BankApp.Views"
+      xmlns:vm="clr-namespace:BankApp.ViewModels"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1000"
+      Title="ProfilePage">
+
+    <Page.DataContext>
+        <vm:ProfileViewModel/>
+    </Page.DataContext>
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Button.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBox.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Background="White">
+            <TextBlock Text="ПРОФИЛЬ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0,0,0"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="1.2*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                        <GradientStop Color="#5D95E4"/>
+                        <GradientStop Color="#2E5EBE" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+            </Grid>
+            <Grid Grid.Row="1" Background="#E6EAF1"/>
+            <Grid Grid.RowSpan="2" Height="400">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Background="White" Width="275" Height="340" CornerRadius="5" VerticalAlignment="Top" Margin="25,0,25,0">
+                    <StackPanel>
+                        <Grid Height="180">
+                            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <Image Height="90" Width="90" Source="../../Resources/Images/Avatar.png"/>
+                                <TextBlock Text="{Binding User.ShortName}" Style="{StaticResource SemiBold}" FontSize="15" HorizontalAlignment="Center"
+                                           Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Background="#F2F4F8" Height="30">
+                            <TextBlock Text="Дата рождения" VerticalAlignment="Center" Style="{StaticResource FieldLabel}" 
+                                       FontSize="10" Margin="17,0,0,0"/>
+                            <TextBlock Text="{Binding User.DateOfBirth, StringFormat={}{0:dd.MM.yyyy}}" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource SemiBold}" 
+                                       FontSize="10" Margin="0,0,17,0"/>
+                        </Grid>
+                        <Grid Background="White" Height="30">
+                            <TextBlock Text="Почта" VerticalAlignment="Center" Style="{StaticResource FieldLabel}" 
+                                       FontSize="10" Margin="17,0,0,0"/>
+                            <TextBlock Text="{Binding User.Email}" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource SemiBold}" 
+                                       FontSize="10" Margin="0,0,17,0"/>
+                        </Grid>
+                        <Grid Background="#F2F4F8" Height="30">
+                            <TextBlock Text="Телефон" VerticalAlignment="Center" Style="{StaticResource FieldLabel}" 
+                                       FontSize="10" Margin="17,0,0,0"/>
+                            <TextBlock Text="{Binding User.Phone, StringFormat={}+{0}}" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{StaticResource SemiBold}" 
+                                       FontSize="10" Margin="0,0,17,0"/>
+                        </Grid>
+                        <Grid Background="White" MinHeight="30">
+                            <TextBlock Text="Адрес проживания" VerticalAlignment="Center" Style="{StaticResource FieldLabel}" 
+                                       FontSize="10" Margin="17,0,0,0"/>
+                            <TextBlock Text="{Binding User.Address}" Width="130" HorizontalAlignment="Right" Style="{StaticResource SemiBold}" 
+                                       FontSize="10" Margin="0,7,17,7" TextWrapping="Wrap"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+                <Border Background="White" Width="650" Height="400" CornerRadius="5" Grid.Column="1" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

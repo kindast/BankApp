@@ -1,0 +1,55 @@
+﻿<Window x:Class="BankApp.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BankApp.Views"
+        xmlns:uc="clr-namespace:BankApp.UserControls"
+        mc:Ignorable="d"
+        Title="ПрогрессБанк - Вход в систему" 
+        MinWidth="1200" 
+        MinHeight="750"
+        Width="1200" 
+        Height="750"
+        Icon="/Resources/Images/Logo.png">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/Logo.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBox.xaml"/>
+                <ResourceDictionary Source="/Styles/Button.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="Вход" Style="{StaticResource Bold}" FontSize="20" Margin="0,0,0,35"/>
+                <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}" FontSize="13" Margin="0,0,0,7"/>
+                <TextBox Margin="0,0,0,28" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}" FontSize="13" Margin="0,0,0,7"/>
+                <uc:PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Margin="0,0,0,28"/>
+                <Button Content="Войти" Command="{Binding LoginCommand}"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#5D95E4"/>
+                    <GradientStop Color="#2E5EBE" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Image Width="212" Height="232" Source="{StaticResource BigLogo}"/>
+        </Grid>
+    </Grid>
+</Window>
