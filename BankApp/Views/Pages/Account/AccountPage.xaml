@@ -32,7 +32,7 @@
                 </Border>
                 <Button Command="{Binding OpenTransferWindowCommand}" Content="Перевести" Margin="10,0,0,0" VerticalAlignment="Top"/>
             </StackPanel>
-            <Border Background="White" CornerRadius="5" Width="730" Height="200" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+            <Border Background="White" CornerRadius="5" Width="700" Height="200" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
                 <StackPanel>
                     <TextBlock Text="Основная информация" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
                     <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>
@@ -40,37 +40,37 @@
                         <StackPanel Margin="17,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="НАИМЕНОВАНИЕ СЧЕТА" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding BankAccount.Name}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding BankAccount.Name}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="СТАТУС" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="Активен" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="Активен" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="11,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="НОМЕР СЧЕТА" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding BankAccount.Number}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding BankAccount.Number}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="ВЛАДЕЛЕЦ" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding BankAccount.User.ShortName}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding BankAccount.User.ShortName}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="11,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="ТИП СЧЕТА" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding BankAccount.Type.Name}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding BankAccount.TypeString}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="ДАТА ОТКРЫТИЯ" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding BankAccount.DateOpen, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding BankAccount.DateOpen, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>
-            <Border Background="White" CornerRadius="5" Width="730" Height="250" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+            <Border Background="White" CornerRadius="5" Width="700" Height="250" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
                 <StackPanel>
                     <TextBlock Text="Операции по счету" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
                     <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>

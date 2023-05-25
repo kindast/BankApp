@@ -24,12 +24,25 @@ namespace BankApp.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string PlaceOfBirth { get; set; }
 
         [NotMapped]
         public string FullName { get => $"{Surname} {Name} {Patronymic}"; }
 
         [NotMapped]
         public string ShortName { get => $"{Surname} {Name.Substring(0, 1)}.{Patronymic.Substring(0, 1)}."; set => Name = Name; }
+
+        [NotMapped]
+        public string RoleName { get => Role == Role.Manager ? "Менеджер" : "Клиент"; }
+
+        [NotMapped]
+        public string Passport 
+        { 
+            get => $"{PassportSeries}{PassportNumber}"; 
+            set
+            {
+                PassportSeries = value.ToString().Substring(0, 4);
+                PassportNumber = value.ToString().Substring(4, 6);
+            }
+        }
     }
 }

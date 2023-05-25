@@ -1,15 +1,30 @@
 ﻿using BankApp.Helpers;
+using BankApp.Models;
 using BankApp.Repository;
 using BankApp.Views;
-using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : ViewModel
     {
         private DepositRepository _depositRepository = new DepositRepository();
+        private UserRepository _userRepository = new UserRepository();
+        private Window _mainWindow;
+
+        private User _user;
+        public User User
+        {
+            get => _user;
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
+
         private Page _currentPage = new Page();
         public Page CurrentPage
         {
@@ -21,18 +36,21 @@ namespace BankApp.ViewModels
             }
         }
 
-        public MainViewModel()
+        public MainViewModel(Window mainWindow)
         {
-            OpenClientsPageCommand = new Command(NavigateToClients);
-            OpenAccountsPageCommand = new Command(NavigateToAccounts);
-            OpenProfilePageCommand = new Command(NavigateToProfile);
-            OpenCalculatorPageCommand = new Command(NavigateToDeposits);
+            User = _userRepository.GetUser(CurrentUser.Id);
+            _mainWindow = mainWindow;
+            if (User.Role == Role.Client)
+                CurrentPage = new AccountsPage();
+            else
+                CurrentPage = new ClientsPage();
         }
 
-        public ICommand OpenClientsPageCommand { get; set; }
-        public ICommand OpenAccountsPageCommand { get; set; }
-        public ICommand OpenProfilePageCommand { get; set; }
-        public ICommand OpenCalculatorPageCommand { get; set; }
+        public ICommand OpenClientsPageCommand { get => new Command(NavigateToClients); }
+        public ICommand OpenAccountsPageCommand { get => new Command(NavigateToAccounts); }
+        public ICommand OpenProfilePageCommand { get => new Command(NavigateToProfile); }
+        public ICommand OpenDepositsPageCommand { get => new Command(NavigateToDeposits); }
+        public ICommand SignOutCommand { get => new Command(SignOut); }
 
         private void NavigateToClients(object parameter)
         {
@@ -57,11 +75,12 @@ namespace BankApp.ViewModels
                 CurrentPage = new DepositsPage();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
+        private void SignOut(object parameter)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CurrentUser.Id = 0;
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            _mainWindow.Close();
         }
     }
 }

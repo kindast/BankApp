@@ -1,12 +1,15 @@
-﻿using BankApp.Models;
+﻿using BankApp.Helpers;
+using BankApp.Models;
 using BankApp.Repository;
+using BankApp.Views;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class ClientsViewModel : INotifyPropertyChanged
+    public class ClientsViewModel : ViewModel
     {
         private UserRepository _userRepository;
         private ObservableCollection<User> _clients;
@@ -53,11 +56,11 @@ namespace BankApp.ViewModels
             Clients = new ObservableCollection<User>(clients);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand OpenRegisterClientPageCommand { get => new Command(OpenRegisterClientPage); }
 
-        private void OnPropertyChanged(string propertyName)
+        private void OpenRegisterClientPage(object parameter)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            MainFrame.Frame.Navigate(new RegisterClientPage());
         }
     }
 }

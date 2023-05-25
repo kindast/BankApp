@@ -41,11 +41,11 @@
                     </Grid>
                 </Border>
                 <Grid Margin="10,0,0,0">
-                    <Button Visibility="{Binding Deposit.DepositRate.IsReplenishment, Converter={StaticResource BoolToVisibilityConverter}}" Content="Пополнить" VerticalAlignment="Top"/>
-                    <Button Command="{Binding OpenTransferWindowCommand}" Visibility="{Binding Deposit.DepositRate.IsWithdrawal, Converter={StaticResource BoolToVisibilityConverter}}" Content="Перевести" VerticalAlignment="Bottom"/>
+                    <Button Command="{Binding ReplenishDepositCommand}" Visibility="{Binding Deposit.DepositRate.IsReplenishment, Converter={StaticResource BoolToVisibilityConverter}}" Content="Пополнить" VerticalAlignment="Top"/>
+                    <Button Command="{Binding TransferCommand}" Visibility="{Binding Deposit.DepositRate.IsWithdrawal, Converter={StaticResource BoolToVisibilityConverter}}" Content="Перевести" VerticalAlignment="Bottom"/>
                 </Grid>
             </StackPanel>
-            <Border Background="White" CornerRadius="5" Width="730" Height="200" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+            <Border Background="White" CornerRadius="5" Width="700" Height="200" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
                 <StackPanel>
                     <TextBlock Text="Основная информация" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
                     <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>
@@ -53,37 +53,37 @@
                         <StackPanel Margin="17,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="НАИМЕНОВАНИЕ ВКЛАДА" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding Deposit.BankAccount.Name}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding Deposit.BankAccount.Name}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="СТАТУС" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="Активен" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="Активен" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="11,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="НОМЕР СЧЕТА" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding Deposit.BankAccount.Number}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding Deposit.BankAccount.Number}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="ВЛАДЕЛЕЦ" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding Deposit.BankAccount.User.ShortName}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding Deposit.BankAccount.User.ShortName}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                         <StackPanel Margin="11,25,0,0">
                             <StackPanel>
                                 <TextBlock Text="ДАТА ОТКРЫТИЯ" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding Deposit.BankAccount.DateOpen, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding Deposit.BankAccount.DateOpen, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                             <StackPanel Margin="0,14,0,0">
                                 <TextBlock Text="ДАТА ОКОНЧАНИЯ" FontSize="10" Style="{StaticResource FieldLabel}"/>
-                                <TextBox Text="{Binding Deposit.DateExpiration, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="225" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                <TextBox Text="{Binding Deposit.DateExpiration, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
             </Border>
-            <Border Background="White" CornerRadius="5" Width="730" Height="250" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+            <Border Background="White" CornerRadius="5" Width="700" Height="250" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
                 <StackPanel>
                     <TextBlock Text="Операции по счету" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
                     <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>

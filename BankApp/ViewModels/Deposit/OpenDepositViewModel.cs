@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class OpenDepositViewModel : INotifyPropertyChanged
+    public class OpenDepositViewModel : ViewModel
     {
         private AccountRepository _accountRepository = new AccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
@@ -40,6 +40,8 @@ namespace BankApp.ViewModels
             {
                 _selectedBankAccount = value;
                 OnPropertyChanged(nameof(SelectedBankAccount));
+                if (Amount > _selectedBankAccount.Balance)
+                    Amount = _selectedBankAccount.Balance;
             }
         }
 
@@ -86,8 +88,6 @@ namespace BankApp.ViewModels
             else
                 Amount = amount;
             _window = window;
-
-            OpenDepositCommand = new Command(OpenDeposit);
         }
 
         private void UpdateDepositRate()
@@ -97,19 +97,12 @@ namespace BankApp.ViewModels
             OnPropertyChanged(nameof(DepositRate));
         }
 
-        public ICommand OpenDepositCommand { get; set; }
+        public ICommand OpenDepositCommand { get => new Command(OpenDeposit); }
 
         private void OpenDeposit(object parameter)
         {
             _depositRepository.CreateDeposit(SelectedBankAccount.Number, DepositRate.Id, CurrentUser.Id, Months, Amount);
             _window.Close();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

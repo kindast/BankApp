@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class DepositCalculatorViewModel : INotifyPropertyChanged
+    public class DepositCalculatorViewModel : ViewModel
     {
         private int _amount = 50000;
         private int _months = 3;
@@ -58,7 +58,6 @@ namespace BankApp.ViewModels
 
         public DepositCalculatorViewModel()
         {
-            OpenDepositCommand = new Command(OpenDeposit);
             UpdateDeposits();
         }
 
@@ -73,19 +72,12 @@ namespace BankApp.ViewModels
             }
         }
 
-        public ICommand OpenDepositCommand { get; set; }
+        public ICommand OpenDepositCommand { get => new Command(OpenDeposit); }
 
         private void OpenDeposit(object parameter)
         {
             OpenDepositWindow openDepositWindow = new OpenDepositWindow(parameter as DepositRate, Months, Amount);
             openDepositWindow.ShowDialog();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

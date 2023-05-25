@@ -1,10 +1,12 @@
-﻿using BankApp.Models;
+﻿using BankApp.Helpers;
+using BankApp.Models;
 using BankApp.Repository;
-using System.ComponentModel;
+using BankApp.Views;
+using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class DepositViewModel : INotifyPropertyChanged
+    public class DepositViewModel : ViewModel
     {
         private Deposit _deposit;
         private DepositsViewModel _depositsViewModel;
@@ -23,31 +25,20 @@ namespace BankApp.ViewModels
         public DepositViewModel(Deposit deposit, DepositsViewModel depositsViewModel)
         {
             Deposit = deposit;
-            //BankAccount.Histories = BankAccount.Histories.OrderByDescending(h => h.DateTime).ToList();
             _depositsViewModel = depositsViewModel;
-            //OpenTransferWindowCommand = new Command(OpenTransferWindow);
         }
 
-        //public ICommand OpenTransferWindowCommand { get; set; }
+        public ICommand ReplenishDepositCommand { get => new Command(ReplenishDeposit); }
+        public ICommand TransferCommand { get => new Command(ReplenishDeposit); }
 
-        //private void OpenTransferWindow(object paremeter)
-        //{
-        //    if (_accountsViewModel.BankAccounts.Count < 2)
-        //    {
-        //        DialogWindow.Show("Для перевода между счетами, у вас должно быть открыто хотя бы 2 счета.");
-        //        return;
-        //    }
-        //    TransferWindow transferWindow = new TransferWindow(Deposit.Account);
-        //    transferWindow.ShowDialog();
-        //    _accountsViewModel.BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(CurrentUser.Id));
-        //    _accountsViewModel.CurrentPage = new AccountPage(_accountRepository.GetAccount(BankAccount.Number), _accountsViewModel);
-        //}
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
+        private void ReplenishDeposit(object parameter)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            DialogWindow.ShowDevelopmentMessage();
+        }
+
+        private void Transfer(object parameter)
+        {
+            DialogWindow.ShowDevelopmentMessage();
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class DepositsViewModel : INotifyPropertyChanged
+    public class DepositsViewModel : ViewModel
     {
         private DepositRepository _depositRepository = new DepositRepository();
         private ObservableCollection<Deposit> _deposits;
@@ -52,11 +52,9 @@ namespace BankApp.ViewModels
         {
             Deposits = new ObservableCollection<Deposit>(_depositRepository.GetDeposits(CurrentUser.Id));
             SelectedDeposit = Deposits.FirstOrDefault();
-
-            OpenCalculatorPageCommand = new Command(OpenDepositCalculator);
         }
 
-        public ICommand OpenCalculatorPageCommand { get; set; }
+        public ICommand OpenCalculatorPageCommand { get => new Command(OpenDepositCalculator); }
 
         private void OpenDepositCalculator(object parameter)
         {
@@ -66,13 +64,6 @@ namespace BankApp.ViewModels
                 return;
             }
             MainFrame.Frame.Navigate(new DepositCalculatorPage());
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

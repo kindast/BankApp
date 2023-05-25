@@ -21,6 +21,14 @@ namespace BankApp.Views
             window.ShowDialog();
         }
 
+        public static void ShowDevelopmentMessage()
+        {
+            DialogWindow window = new DialogWindow();
+            window.Title = "Внимание";
+            window.tbText.Text = "Данный функционал находится в разработке";
+            window.ShowDialog();
+        }
+
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

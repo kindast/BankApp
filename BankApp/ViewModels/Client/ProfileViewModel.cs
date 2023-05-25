@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace BankApp.ViewModels
 {
-    public class ProfileViewModel : INotifyPropertyChanged
+    public class ProfileViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
         private User _user;
@@ -22,14 +22,7 @@ namespace BankApp.ViewModels
 
         public ProfileViewModel()
         {
-            User = _userRepository.GetClient(CurrentUser.Id);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            User = _userRepository.GetUser(CurrentUser.Id);
         }
     }
 }

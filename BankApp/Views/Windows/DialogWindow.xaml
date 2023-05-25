@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:BankApp.Views"
         mc:Ignorable="d"
         Title="DialogWindow" Height="150" Width="300" KeyDown="Window_KeyDown"
-        Icon="/Resources/Images/Logo.png" WindowStartupLocation="CenterScreen">
+        Icon="/Resources/Images/Logo.png" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,8 +16,12 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <StackPanel Margin="10">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <TextBlock x:Name="tbText" Style="{StaticResource Regular}" TextWrapping="Wrap"/>
-        <Button Content="ОК" Click="Button_Click" HorizontalAlignment="Right"/>
-    </StackPanel>
+        <Button Grid.Row="1" Content="ОК" Click="Button_Click" HorizontalAlignment="Right"/>
+    </Grid>
 </Window>

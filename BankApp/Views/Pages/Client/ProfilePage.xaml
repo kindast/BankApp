@@ -52,7 +52,7 @@
                     <StackPanel>
                         <Grid Height="180">
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                                <Image Height="90" Width="90" Source="../../Resources/Images/Avatar.png"/>
+                                <Image Height="90" Width="90" Source="/Resources/Images/Avatar.png"/>
                                 <TextBlock Text="{Binding User.ShortName}" Style="{StaticResource SemiBold}" FontSize="15" HorizontalAlignment="Center"
                                            Margin="0,5,0,0"/>
                             </StackPanel>

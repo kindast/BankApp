@@ -11,7 +11,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/GridView.xaml"/>
+                <ResourceDictionary Source="/Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="/Styles/Button.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBox.xaml"/>
@@ -24,26 +24,27 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid Background="White">
-            <TextBlock Text="КЛИЕНТЫ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0,0,0"/>
-            <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Width="250"/>
+            <TextBlock Text="КЛИЕНТЫ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0"/>
+            <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Width="250"
+                     Tag="Поиск..." Style="{StaticResource PlaceholderTextBox}"/>
+            <Button Content="Добавить" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0" Command="{Binding OpenRegisterClientPageCommand}"/>
         </Grid>
-        <ListView Grid.Row="1" ItemsSource="{Binding Clients}" AlternationCount="2" SelectionMode="Single">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="ФИО" DisplayMemberBinding="{Binding FullName}"/>
-                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" />
-                    <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Phone, StringFormat={}+{0}}" />
-                    <GridViewColumn Header="Адрес проживания" DisplayMemberBinding="{Binding Address}" />
-                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding DateOfBirth, StringFormat={}{0:dd.MM.yyyy}}" />
-                    <GridViewColumn Header="">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="Профиль"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Clients}" AlternationCount="2" SelectionMode="Single" AutoGenerateColumns="False" CanUserSortColumns="False" 
+                  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserResizeColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone, StringFormat={}+{0}}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn Header="Адрес проживания" Binding="{Binding Address}"/>
+                <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth, StringFormat={}{0:dd.MM.yyyy}}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnEditProfile" Click="btnEditProfile_Click" Content="Профиль"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

@@ -13,7 +13,7 @@ namespace BankApp.Views
         {
             InitializeComponent();
             MainFrame.Frame = frame;
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(this);
         }
     }
 }

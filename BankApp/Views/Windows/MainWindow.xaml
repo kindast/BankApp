@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BankApp.Views"
+        xmlns:models="clr-namespace:BankApp.Models"
+        xmlns:conv="clr-namespace:BankApp.Converters"
         xmlns:uc="clr-namespace:BankApp.UserControls" 
         mc:Ignorable="d"
         Title="ПрогрессБанк" 
@@ -19,7 +21,9 @@
                 <ResourceDictionary Source="/Styles/Icon.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
                 <ResourceDictionary Source="/Styles/MenuItem.xaml"/>
+                <ResourceDictionary Source="/Styles/Button.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <conv:RoleToVisibilityConverter x:Key="RoleToVisibilityConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -27,36 +31,52 @@
             <ColumnDefinition Width="180"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Panel.ZIndex="1" Background="White">
-            <StackPanel.Effect>
+        <Grid Panel.ZIndex="1" Background="White">
+            <Grid.Effect>
                 <DropShadowEffect ShadowDepth="0" BlurRadius="20" Opacity="0.1" RenderingBias="Quality"/>
-            </StackPanel.Effect>
-            <Image Width="70" Height="20" Source="{StaticResource SmallLogo}" Margin="0,20,0,0"/>
-            <StackPanel Margin="0,50,0,0">
-                <Menu>
-                    <MenuItem Command="{Binding OpenClientsPageCommand}">
-                        <MenuItem.Header>
-                            <uc:MenuButton Text="Клиенты" Source="{StaticResource IconClients}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Command="{Binding OpenAccountsPageCommand}">
-                        <MenuItem.Header>
-                            <uc:MenuButton Text="Счета" Source="{StaticResource IconWallet}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Command="{Binding OpenCalculatorPageCommand}">
-                        <MenuItem.Header>
-                            <uc:MenuButton Text="Вклады" Source="{StaticResource IconDeposit}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                    <MenuItem Command="{Binding OpenProfilePageCommand}">
-                        <MenuItem.Header>
-                            <uc:MenuButton Text="Профиль" Source="{StaticResource IconProfile}"/>
-                        </MenuItem.Header>
-                    </MenuItem>
-                </Menu>
+            </Grid.Effect>
+            <StackPanel>
+                <Image Width="70" Height="20" Source="{StaticResource SmallLogo}" Margin="0,20,0,0"/>
+                <StackPanel Margin="0,50,0,0">
+                    <Menu>
+                        <MenuItem Command="{Binding OpenClientsPageCommand}" 
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Manager}}">
+                            <MenuItem.Header>
+                                <uc:MenuButton Text="Клиенты" Source="{StaticResource IconClients}"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding OpenAccountsPageCommand}"
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                            <MenuItem.Header>
+                                <uc:MenuButton Text="Счета" Source="{StaticResource IconWallet}"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding OpenDepositsPageCommand}"
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                            <MenuItem.Header>
+                                <uc:MenuButton Text="Вклады" Source="{StaticResource IconDeposit}"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Command="{Binding OpenProfilePageCommand}"
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                            <MenuItem.Header>
+                                <uc:MenuButton Text="Профиль" Source="{StaticResource IconProfile}"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </Menu>
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
+            <StackPanel VerticalAlignment="Bottom" >
+                <StackPanel Orientation="Horizontal" Margin="10,0,10,10">
+                    <Image Source="/Resources/Images/Avatar.png" Height="40" Width="40" HorizontalAlignment="Left"/>
+                    <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
+                        <TextBlock Text="{Binding User.ShortName}" Style="{StaticResource SemiBold}"/>
+                        <TextBlock Text="{Binding User.RoleName }" Style="{StaticResource Regular}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Content="Выйти" Margin="10,0,10,10" Command="{Binding SignOutCommand}"/>
+            </StackPanel>
+        </Grid>
         <Grid Grid.Column="1" Background="#E6EAF1">
             <Frame Grid.Row="1" x:Name="frame" NavigationUIVisibility="Hidden" Content="{Binding CurrentPage}" />
         </Grid>

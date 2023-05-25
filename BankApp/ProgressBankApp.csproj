@@ -75,10 +75,12 @@
     <Compile Include="Converters\AmountToColorConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CountToVisibilityConverter.cs" />
+    <Compile Include="Converters\RoleToVisibilityConverter.cs" />
     <Compile Include="Data\BankDbContext.cs" />
     <Compile Include="Helpers\Command.cs" />
     <Compile Include="Helpers\CurrentUser.cs" />
     <Compile Include="Helpers\MainFrame.cs" />
+    <Compile Include="Helpers\ViewModel.cs" />
     <Compile Include="Migrations\202304191849458_InitialCreate.cs" />
     <Compile Include="Migrations\202304191849458_InitialCreate.designer.cs">
       <DependentUpon>202304191849458_InitialCreate.cs</DependentUpon>
@@ -121,6 +123,8 @@
     <Compile Include="UserControls\PasswordBox.xaml.cs">
       <DependentUpon>PasswordBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Client\ProfileEditViewModel.cs" />
+    <Compile Include="ViewModels\Client\RegisterClientViewModel.cs" />
     <Compile Include="ViewModels\Deposit\DepositViewModel.cs" />
     <Compile Include="ViewModels\Deposit\DepositsViewModel.cs" />
     <Compile Include="ViewModels\Account\AccountsViewModel.cs" />
@@ -132,6 +136,12 @@
     <Compile Include="ViewModels\Deposit\OpenDepositViewModel.cs" />
     <Compile Include="ViewModels\Client\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Account\TransferViewModel.cs" />
+    <Compile Include="Views\Pages\Client\RegisterClientPage.xaml.cs">
+      <DependentUpon>RegisterClientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\Client\ProfileEditPage.xaml.cs">
+      <DependentUpon>ProfileEditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\Deposit\OpenDepositWindow.xaml.cs">
       <DependentUpon>OpenDepositWindow.xaml</DependentUpon>
     </Compile>
@@ -220,11 +230,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\Calendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\ComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\DataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DatePicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,10 +255,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Font.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\GridView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -264,6 +278,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\TabControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\TextBlock.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -281,6 +299,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\PasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\Client\RegisterClientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\Client\ProfileEditPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

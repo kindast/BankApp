@@ -1,4 +1,6 @@
-﻿using BankApp.ViewModels;
+﻿using BankApp.Helpers;
+using BankApp.Models;
+using BankApp.ViewModels;
 using System.Windows.Controls;
 
 namespace BankApp.Views
@@ -12,6 +14,11 @@ namespace BankApp.Views
         {
             InitializeComponent();
             DataContext = new ClientsViewModel();
+        }
+
+        private void btnEditProfile_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MainFrame.Frame.Navigate(new ProfileEditPage(((sender as Button).DataContext as User).Id));
         }
     }
 }

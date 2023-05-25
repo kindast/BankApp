@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace BankApp.ViewModels
 {
-    public class AccountsViewModel : INotifyPropertyChanged
+    public class AccountsViewModel : ViewModel
     {
         private AccountRepository _accountRepository = new AccountRepository();
         private ObservableCollection<BankAccount> _bankAccounts;
@@ -33,7 +33,8 @@ namespace BankApp.ViewModels
             {
                 _selectedBankAccount = value;
                 OnPropertyChanged(nameof(SelectedBankAccount));
-                CurrentPage = new AccountPage(_selectedBankAccount, this);
+                if (SelectedBankAccount != null)
+                    CurrentPage = new AccountPage(SelectedBankAccount, this);
             }
         }
 
@@ -51,13 +52,6 @@ namespace BankApp.ViewModels
         {
             BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(CurrentUser.Id));
             SelectedBankAccount = BankAccounts.FirstOrDefault();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

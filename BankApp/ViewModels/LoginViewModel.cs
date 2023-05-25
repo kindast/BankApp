@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
-        private string _login = "test";
-        private string _password = "test";
+        private string _login;
+        private string _password;
         private string _errorMessage;
         private Window _loginWindow;
 
@@ -48,16 +48,15 @@ namespace BankApp.ViewModels
         public LoginViewModel(Window loginWindow)
         {
             _loginWindow = loginWindow;
-            LoginCommand = new Command(SignIn, CanSignIn);
         }
 
-        public ICommand LoginCommand { get; set; }
+        public ICommand LoginCommand { get => new Command(SignIn, CanSignIn); }
 
         private void SignIn(object parameter)
         {
             if (_userRepository.UserExists(Login, Password))
             {
-                CurrentUser.Id = _userRepository.GetClient(Login).Id;
+                CurrentUser.Id = _userRepository.GetUser(Login).Id;
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 _loginWindow.Close();
@@ -69,13 +68,6 @@ namespace BankApp.ViewModels
         private bool CanSignIn(object parameter)
         {
             return !string.IsNullOrWhiteSpace(Login) && !string.IsNullOrWhiteSpace(Password);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

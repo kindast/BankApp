@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class AccountViewModel : INotifyPropertyChanged
+    public class AccountViewModel : ViewModel
     {
         private BankAccount _bankAccount;
         private AccountsViewModel _accountsViewModel;
@@ -30,10 +30,9 @@ namespace BankApp.ViewModels
             BankAccount = account;
             BankAccount.Histories = BankAccount.Histories.OrderByDescending(h => h.DateTime).ToList();
             _accountsViewModel = accountsViewModel;
-            OpenTransferWindowCommand = new Command(OpenTransferWindow);
         }
 
-        public ICommand OpenTransferWindowCommand { get; set; }
+        public ICommand OpenTransferWindowCommand { get => new Command(OpenTransferWindow); }
 
         private void OpenTransferWindow(object paremeter)
         {
@@ -46,13 +45,6 @@ namespace BankApp.ViewModels
             transferWindow.ShowDialog();
             _accountsViewModel.BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(CurrentUser.Id));
             _accountsViewModel.CurrentPage = new AccountPage(_accountRepository.GetAccount(BankAccount.Number), _accountsViewModel);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

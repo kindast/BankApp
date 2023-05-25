@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
-    public class TransferViewModel : INotifyPropertyChanged
+    public class TransferViewModel : ViewModel
     {
         private Window _transferWindow;
         private AccountRepository _accountRepository = new AccountRepository();
@@ -96,23 +96,14 @@ namespace BankApp.ViewModels
             _bankAccountsFrom = new ObservableCollection<BankAccount>(_bankAccounts);
             BankAccountFrom = bankAccountFrom;
             BankAccountTo = BankAccountsTo.FirstOrDefault();
-
-            TransferCommand = new Command(Transfer);
         }
 
-        public ICommand TransferCommand { get; set; }
+        public ICommand TransferCommand { get => new Command(Transfer); }
 
         private void Transfer(object parameter)
         {
             if (_accountRepository.Transfer(BankAccountFrom, BankAccountTo, Amount))
                 _transferWindow.Close();
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

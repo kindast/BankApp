@@ -30,6 +30,12 @@ namespace BankApp.Models
             get => Balance.ToString(Balance % 1 == 0 ? "N0" : "N2", CultureInfo.CreateSpecificCulture("ru-RU")) + "₽";
         }
 
+        [NotMapped]
+        public string TypeString
+        {
+            get => Type == BankAccountType.Checking ? "Расчетный" : "Вклад"; set { }
+        }
+
         public static string GenerateUniqueNumber(int length)
         {
             AccountRepository accountRepository = new AccountRepository();
