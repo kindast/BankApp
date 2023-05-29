@@ -3,7 +3,6 @@ using BankApp.Models;
 using BankApp.Repository;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
@@ -15,7 +14,9 @@ namespace BankApp.ViewModels
     {
         private Window _transferWindow;
         private AccountRepository _accountRepository = new AccountRepository();
-        private ICollection<BankAccount> _bankAccounts;
+        private DepositRepository _depositRepository = new DepositRepository();
+        private List<BankAccount> _bankAccounts;
+        private List<Deposit> _deposits;
         private ObservableCollection<BankAccount> _bankAccountsFrom;
         private ObservableCollection<BankAccount> _bankAccountsTo;
         private BankAccount _bankAccountFrom;
@@ -27,6 +28,7 @@ namespace BankApp.ViewModels
             get => _bankAccountsFrom;
             set
             {
+                var accounts = value;
                 _bankAccountsFrom = value;
                 OnPropertyChanged(nameof(BankAccountsFrom));
             }
@@ -39,7 +41,8 @@ namespace BankApp.ViewModels
             {
                 _bankAccountFrom = value;
                 OnPropertyChanged(nameof(BankAccountFrom));
-                BankAccountsTo = new ObservableCollection<BankAccount>(_bankAccounts.Where(a => a.Number != BankAccountFrom.Number).ToList());
+                BankAccountsTo = new ObservableCollection<BankAccount>(_bankAccounts.Where(a => a.Number != BankAccountFrom.Number)
+                    .Concat(_deposits.Where(d => d.DepositRate.IsWithdrawal || d.DepositRate.IsReplenishment).Select(d => d.BankAccount).ToList()));
                 BankAccountTo = BankAccountsTo.FirstOrDefault();
             }
         }
@@ -89,21 +92,31 @@ namespace BankApp.ViewModels
             }
         }
 
-        public TransferViewModel(Window transferWindow, BankAccount bankAccountFrom)
+        public TransferViewModel(Window transferWindow, BankAccount bankAccountFrom, BankAccount bankAccountTo = null)
         {
             _transferWindow = transferWindow;
-            _bankAccounts = _accountRepository.GetAccounts(CurrentUser.Id);
-            _bankAccountsFrom = new ObservableCollection<BankAccount>(_bankAccounts);
-            BankAccountFrom = bankAccountFrom;
-            BankAccountTo = BankAccountsTo.FirstOrDefault();
+            _deposits = _depositRepository.GetDeposits(CurrentUser.Id).Where(d => d.DepositRate.IsReplenishment || d.DepositRate.IsWithdrawal).ToList();
+            _bankAccounts = (List<BankAccount>)_accountRepository.GetAccounts(CurrentUser.Id);
+            _bankAccountsFrom = new ObservableCollection<BankAccount>(_bankAccounts.Concat(_deposits.Where(d => d.DepositRate.IsWithdrawal).Select(d => d.BankAccount).ToList()));
+
+            BankAccountFrom = bankAccountFrom == null ? BankAccountsFrom.FirstOrDefault() : bankAccountFrom;
+            BankAccountTo = bankAccountTo == null ? BankAccountsTo.FirstOrDefault() : bankAccountTo;
         }
 
-        public ICommand TransferCommand { get => new Command(Transfer); }
+        public ICommand TransferCommand { get => new Command(Transfer, CanTransfer); }
 
         private void Transfer(object parameter)
         {
             if (_accountRepository.Transfer(BankAccountFrom, BankAccountTo, Amount))
                 _transferWindow.Close();
+        }
+
+        private bool CanTransfer(object parameter)
+        {
+            if (Amount <= 0 || BankAccountFrom == null || BankAccountTo == null)
+                return false;
+
+            return true;
         }
     }
 }

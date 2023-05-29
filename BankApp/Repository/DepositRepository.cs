@@ -16,9 +16,14 @@ namespace BankApp.Repository
             _context = BankDbContext.GetContext();
         }
 
+        public ICollection<Deposit> GetDeposits()
+        {
+            return _context.Deposits.Include(d => d.DepositRate).Include(d => d.BankAccount).Include(d => d.BankAccount.Histories).OrderBy(a => a.BankAccount.DateOpen).ToList();
+        }
+
         public ICollection<Deposit> GetDeposits(int clientId)
         {
-            return _context.Deposits.Include(d => d.DepositRate).Include(d => d.BankAccount).Where(a => a.BankAccount.User.Id == clientId).OrderBy(a => a.BankAccount.DateOpen).ToList();
+            return _context.Deposits.Include(d => d.DepositRate).Include(d => d.BankAccount).Include(d => d.BankAccount.Histories).Where(a => a.BankAccount.User.Id == clientId).OrderBy(a => a.BankAccount.DateOpen).ToList();
         }
 
         public bool CreateDeposit(string bankAccountNumber, int depositRateId, int clientId, int months, decimal amount)
@@ -68,10 +73,17 @@ namespace BankApp.Repository
                 BankAccount = bankAccount,
                 DepositRate = depositRate,
                 DateExpiration = DateTime.Now.AddMonths(months),
-                DateLastAccrual = DateTime.Now
+                MonthsPassed = 0,
+                Months = months
             };
             _context.Deposits.Add(deposit);
 
+            return Save();
+        }
+
+        public bool DeleteDeposit(Deposit deposit)
+        {
+            _context.Deposits.Remove(deposit);
             return Save();
         }
 

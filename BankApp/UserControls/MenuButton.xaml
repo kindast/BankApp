@@ -17,12 +17,11 @@
     </UserControl.Resources>
     <Grid Width="174" Height="45">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="35"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="3"/>
         </Grid.ColumnDefinitions>
-        <Image Width="20" Height="20" Source="{Binding Source}" Margin="25,0,0,0"/>
+        <Image Width="20" Height="20" Source="{Binding Source}" Margin="15,0,0,0"/>
         <TextBlock Grid.Column="1" Text="{Binding Text}" Style="{StaticResource SemiBold}" FontSize="13" Margin="10,0,0,0" VerticalAlignment="Center"/>
-        <!--<Rectangle x:Name="activeBar" Width="3" Grid.Column="2" Fill="#FF568CF9" HorizontalAlignment="Right"/>-->
     </Grid>
 </UserControl>

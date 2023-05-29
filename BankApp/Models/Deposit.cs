@@ -13,7 +13,8 @@ namespace BankApp.Models
         [Required]
         public DepositRate DepositRate { get; set; }
         public DateTime DateExpiration { get; set; }
-        public DateTime DateLastAccrual { get; set; }
+        public int Months { get; set; }
+        public int MonthsPassed { get; set; }
         public decimal Accumulated { get; set; }
 
         [NotMapped]

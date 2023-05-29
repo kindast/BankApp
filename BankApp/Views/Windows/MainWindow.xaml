@@ -57,6 +57,12 @@
                                 <uc:MenuButton Text="Вклады" Source="{StaticResource IconDeposit}"/>
                             </MenuItem.Header>
                         </MenuItem>
+                        <MenuItem Command="{Binding OpenDepositRatesPageCommand}"
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Manager}}">
+                            <MenuItem.Header>
+                                <uc:MenuButton Text="Тарифы вкладов" Source="{StaticResource IconDeposit}"/>
+                            </MenuItem.Header>
+                        </MenuItem>
                         <MenuItem Command="{Binding OpenProfilePageCommand}"
                                   Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
                             <MenuItem.Header>

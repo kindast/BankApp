@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BankApp.Views"
+      xmlns:conv="clr-namespace:BankApp.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1000"
       Title="ProfileEditPage">
@@ -18,6 +19,7 @@
                 <ResourceDictionary Source="/Styles/DataGrid.xaml"/>
                 <ResourceDictionary Source="/Styles/TabControl.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
@@ -27,6 +29,7 @@
         </Grid.RowDefinitions>
         <Grid Background="White">
             <TextBlock Text="ПРОФИЛЬ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0,0,0"/>
+            <Button Content="Назад" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,16,0" Command="{Binding OpenClientsPageCommand}"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -142,6 +145,8 @@
                                         <DataGridTextColumn Header="Баланс" Binding="{Binding FormattedBalance}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
+                                <TextBlock Text="Нет открытых счетов" Visibility="{Binding BankAccounts.Count, Converter={StaticResource CountToVisibilityConverter}}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="1" Style="{StaticResource Regular}" Foreground="Black"/>
                                 <Button Grid.Row="1" Content="Открыть новый счет" Command="{Binding OpenNewAccountCommand}"/>
                             </Grid>
                         </TabItem>
@@ -156,6 +161,8 @@
                                         <DataGridTextColumn Header="Дата окончания" Binding="{Binding DateExpiration, StringFormat='dd.MM.yyyy'}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
+                                <TextBlock Text="Нет открытых вкладов" Visibility="{Binding Deposits.Count, Converter={StaticResource CountToVisibilityConverter}}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="1" Style="{StaticResource Regular}" Foreground="Black"/>
                             </Grid>
                         </TabItem>
                     </TabControl>

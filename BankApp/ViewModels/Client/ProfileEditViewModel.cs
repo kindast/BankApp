@@ -4,8 +4,8 @@ using BankApp.Repository;
 using BankApp.Views;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 using System.Linq;
+using System.Windows.Input;
 
 namespace BankApp.ViewModels
 {
@@ -30,7 +30,7 @@ namespace BankApp.ViewModels
         }
 
         private ObservableCollection<BankAccount> _bankAccounts;
-        public ObservableCollection<BankAccount> BankAccounts 
+        public ObservableCollection<BankAccount> BankAccounts
         {
             get => _bankAccounts;
             set
@@ -79,6 +79,7 @@ namespace BankApp.ViewModels
         }
 
         public ICommand OpenNewAccountCommand { get => new Command(OpenNewAccount); }
+        public ICommand OpenClientsPageCommand { get => new Command(OpenClientsPage); }
 
         private void OpenNewAccount(object parameter)
         {
@@ -102,6 +103,11 @@ namespace BankApp.ViewModels
 
             _accountRepository.CreateAccount(bankAccount);
             BankAccounts.Add(bankAccount);
+        }
+
+        private void OpenClientsPage(object parameter)
+        {
+            MainFrame.Frame.Navigate(new ClientsPage());
         }
     }
 }

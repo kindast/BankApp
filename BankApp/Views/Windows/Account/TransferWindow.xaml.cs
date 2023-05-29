@@ -9,10 +9,10 @@ namespace BankApp.Views
     /// </summary>
     public partial class TransferWindow : Window
     {
-        public TransferWindow(BankAccount bankAccount)
+        public TransferWindow(BankAccount bankAccountFrom, BankAccount bankAccountTo = null)
         {
             InitializeComponent();
-            DataContext = new TransferViewModel(this, bankAccount);
+            DataContext = new TransferViewModel(this, bankAccountFrom, bankAccountTo);
         }
     }
 }

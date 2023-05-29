@@ -35,9 +35,9 @@ namespace BankApp.Models
         public string RoleName { get => Role == Role.Manager ? "Менеджер" : "Клиент"; }
 
         [NotMapped]
-        public string Passport 
-        { 
-            get => $"{PassportSeries}{PassportNumber}"; 
+        public string Passport
+        {
+            get => $"{PassportSeries}{PassportNumber}";
             set
             {
                 PassportSeries = value.ToString().Substring(0, 4);

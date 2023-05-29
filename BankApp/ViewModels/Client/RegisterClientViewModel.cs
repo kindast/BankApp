@@ -3,13 +3,7 @@ using BankApp.Models;
 using BankApp.Repository;
 using BankApp.Views;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace BankApp.ViewModels
@@ -17,6 +11,7 @@ namespace BankApp.ViewModels
     public class RegisterClientViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
+        private AccountRepository _accountRepository = new AccountRepository();
 
         private string _surname;
         public string Surname
@@ -159,12 +154,25 @@ namespace BankApp.ViewModels
             };
 
             _userRepository.CreateUser(user);
+
+            BankAccount bankAccount = new BankAccount()
+            {
+                Number = BankAccount.GenerateUniqueNumber(10),
+                Name = "Progress Standart",
+                DateOpen = DateTime.Now,
+                Balance = 0,
+                User = _userRepository.GetClients().Last(),
+                Type = BankAccountType.Checking
+            };
+
+            _accountRepository.CreateAccount(bankAccount);
+
             MainFrame.Frame.Navigate(new ClientsPage());
         }
 
         private bool CanRegister(object parameter)
         {
-            if (string.IsNullOrWhiteSpace(Surname) || string.IsNullOrWhiteSpace(Name) 
+            if (string.IsNullOrWhiteSpace(Surname) || string.IsNullOrWhiteSpace(Name)
                 || Passport.Length != 10 || !long.TryParse(Passport, out _) || string.IsNullOrWhiteSpace(Address)
                 || string.IsNullOrWhiteSpace(Phone) || string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(Password))
             {

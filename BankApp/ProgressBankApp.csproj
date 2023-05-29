@@ -75,6 +75,7 @@
     <Compile Include="Converters\AmountToColorConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\CountToVisibilityConverter.cs" />
+    <Compile Include="Converters\DepositEndedToVisibilityConverter.cs" />
     <Compile Include="Converters\RoleToVisibilityConverter.cs" />
     <Compile Include="Data\BankDbContext.cs" />
     <Compile Include="Helpers\Command.cs" />
@@ -125,6 +126,7 @@
     </Compile>
     <Compile Include="ViewModels\Client\ProfileEditViewModel.cs" />
     <Compile Include="ViewModels\Client\RegisterClientViewModel.cs" />
+    <Compile Include="ViewModels\DepositRate\DepositRatesViewModel.cs" />
     <Compile Include="ViewModels\Deposit\DepositViewModel.cs" />
     <Compile Include="ViewModels\Deposit\DepositsViewModel.cs" />
     <Compile Include="ViewModels\Account\AccountsViewModel.cs" />
@@ -136,6 +138,9 @@
     <Compile Include="ViewModels\Deposit\OpenDepositViewModel.cs" />
     <Compile Include="ViewModels\Client\ProfileViewModel.cs" />
     <Compile Include="ViewModels\Account\TransferViewModel.cs" />
+    <Compile Include="Views\Pages\DepositRate\DepositRatesPage.xaml.cs">
+      <DependentUpon>DepositRatesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\Client\RegisterClientPage.xaml.cs">
       <DependentUpon>RegisterClientPage.xaml</DependentUpon>
     </Compile>
@@ -299,6 +304,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\PasswordBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\DepositRate\DepositRatesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -19,6 +19,11 @@ namespace BankApp.Repository
             return _context.Users.Any(u => u.Login == login && u.Password == password);
         }
 
+        public ICollection<User> GetUsers()
+        {
+            return _context.Users.ToList();
+        }
+        
         public ICollection<User> GetClients()
         {
             return _context.Users.Where(u => u.Role == Role.Client).ToList();

@@ -46,34 +46,18 @@ namespace BankApp.ViewModels
                 CurrentPage = new ClientsPage();
         }
 
-        public ICommand OpenClientsPageCommand { get => new Command(NavigateToClients); }
-        public ICommand OpenAccountsPageCommand { get => new Command(NavigateToAccounts); }
-        public ICommand OpenProfilePageCommand { get => new Command(NavigateToProfile); }
-        public ICommand OpenDepositsPageCommand { get => new Command(NavigateToDeposits); }
-        public ICommand SignOutCommand { get => new Command(SignOut); }
-
-        private void NavigateToClients(object parameter)
-        {
-            CurrentPage = new ClientsPage();
-        }
-
-        private void NavigateToAccounts(object parameter)
-        {
-            CurrentPage = new AccountsPage();
-        }
-
-        private void NavigateToProfile(object parameter)
-        {
-            CurrentPage = new ProfilePage();
-        }
-
-        private void NavigateToDeposits(object parameter)
+        public ICommand OpenClientsPageCommand { get => new Command((p) => { CurrentPage = new ClientsPage(); }); }
+        public ICommand OpenAccountsPageCommand { get => new Command((p) => { CurrentPage = new AccountsPage(); }); }
+        public ICommand OpenProfilePageCommand { get => new Command((p) => { CurrentPage = new ProfilePage(); }); }
+        public ICommand OpenDepositsPageCommand { get => new Command((p) => 
         {
             if (_depositRepository.GetDeposits(CurrentUser.Id).Count == 0)
                 CurrentPage = new DepositCalculatorPage();
             else
                 CurrentPage = new DepositsPage();
-        }
+        }); }
+        public ICommand OpenDepositRatesPageCommand { get => new Command((p) => { CurrentPage = new DepositRatesPage(); }); }
+        public ICommand SignOutCommand { get => new Command(SignOut); }
 
         private void SignOut(object parameter)
         {

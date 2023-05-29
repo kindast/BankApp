@@ -32,47 +32,49 @@
         <Grid Background="White">
             <TextBlock Text="РЕГИСТРАЦИЯ НОВОГО КЛИЕНТА" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0"/>
         </Grid>
-        <StackPanel Grid.Row="1" Margin="25">
-            <StackPanel Orientation="Horizontal">
-                <StackPanel Width="300">
-                    <TextBlock Text="ФАМИЛИЯ" Style="{StaticResource FieldLabel}"/>
-                    <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
+        <Border Grid.Row="1" Margin="32" Background="White" Width="680" CornerRadius="5" HorizontalAlignment="Left">
+            <StackPanel Margin="25">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Width="300">
+                        <TextBlock Text="ФАМИЛИЯ" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Text="{Binding Surname, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                    <TextBlock Text="ИМЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
+                        <TextBlock Text="ИМЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                    <TextBlock Text="ОТЧЕСТВО (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
+                        <TextBlock Text="ОТЧЕСТВО (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                    <TextBlock Text="СЕРИЯ И НОМЕР ПАСПОРТА" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Passport, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="10"/>
+                        <TextBlock Text="СЕРИЯ И НОМЕР ПАСПОРТА" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Passport, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="10"/>
 
-                    <TextBlock Text="АДРЕС ПРОЖИВАНИЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="100"/>
+                        <TextBlock Text="АДРЕС ПРОЖИВАНИЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="100"/>
 
-                    <Button Content="Добавить" Margin="0,25,0,0" Command="{Binding RegisterClientCommand}"/>
-                </StackPanel>
-                <StackPanel Width="300" Margin="25,0,0,0">
-                    <TextBlock Text="НОМЕР ТЕЛЕФОНА" Style="{StaticResource FieldLabel}"/>
-                    <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="11"/>
+                        <Button Content="Добавить" Margin="0,25,0,0" Command="{Binding RegisterClientCommand}"/>
+                    </StackPanel>
+                    <StackPanel Width="300" Margin="25,0,0,0">
+                        <TextBlock Text="НОМЕР ТЕЛЕФОНА" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="11"/>
 
-                    <TextBlock Text="ЭЛЕКТРОННАЯ ПОЧТА (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="50"/>
+                        <TextBlock Text="ЭЛЕКТРОННАЯ ПОЧТА (НЕОБЯЗАТЕЛЬНО)" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="50"/>
 
-                    <TextBlock Text="ДАТА РОЖДЕНИЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <DatePicker SelectedDate="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"
+                        <TextBlock Text="ДАТА РОЖДЕНИЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <DatePicker SelectedDate="{Binding DateOfBirth, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"
                                 DisplayDateStart="{Binding DateStart}"
                                 DisplayDateEnd="{Binding DateEnd}"/>
 
-                    <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
+                        <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                    <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
-                    <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
+                        <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                    <Button Content="Отмена" Command="{Binding CancelRegisterCommand}" Margin="0,25,0,0"/>
+                        <Button Content="Отмена" Command="{Binding CancelRegisterCommand}" Margin="0,25,0,0"/>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
-        </StackPanel>
+        </Border>
     </Grid>
 </Page>

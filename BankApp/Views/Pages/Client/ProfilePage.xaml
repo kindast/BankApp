@@ -4,14 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BankApp.Views"
-      xmlns:vm="clr-namespace:BankApp.ViewModels"
+      xmlns:uc="clr-namespace:BankApp.UserControls"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1000"
       Title="ProfilePage">
-
-    <Page.DataContext>
-        <vm:ProfileViewModel/>
-    </Page.DataContext>
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -83,7 +79,19 @@
                         </Grid>
                     </StackPanel>
                 </Border>
-                <Border Background="White" Width="650" Height="400" CornerRadius="5" Grid.Column="1" HorizontalAlignment="Left"/>
+                <Border Background="White" Width="650" Height="400" CornerRadius="5" Grid.Column="1" HorizontalAlignment="Left">
+                    <StackPanel Margin="25">
+                        <TextBlock Text="ИЗМЕНЕНИЕ ПАРОЛЯ" Style="{StaticResource FieldLabel}"/>
+                        <TextBlock Text="СТАРЫЙ ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,15,0,0"/>
+                        <uc:PasswordBox x:Name="pbOldPassword" Margin="0,5,0,0" PasswordChanged="pbOldPassword_PasswordChanged"/>
+                        <TextBlock Text="НОВЫЙ ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,15,0,0"/>
+                        <uc:PasswordBox x:Name="pbNewPassword" Margin="0,5,0,0" PasswordChanged="pbNewPassword_PasswordChanged"/>
+                        <TextBlock Text="ПОДТВЕРЖДЕНИЕ ПАРОЛЯ" Style="{StaticResource FieldLabel}" Margin="0,15,0,0"/>
+                        <uc:PasswordBox x:Name="pbNewPasswordConfirm" Margin="0,5,0,0" PasswordChanged="pbNewPasswordConfirm_PasswordChanged"/>
+                        <Button Content="Изменить пароль" Command="{Binding ChangePasswordCommand}" Margin="0,15,0,0"/>
+                        <TextBlock Text="{Binding ErrorMessage}" Style="{StaticResource SemiBold}" Margin="0,15,0,0" FontSize="13" Foreground="#F8407E"/>
+                    </StackPanel>
+                </Border>
             </Grid>
         </Grid>
     </Grid>
