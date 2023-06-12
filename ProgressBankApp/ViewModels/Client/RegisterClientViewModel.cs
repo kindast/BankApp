@@ -3,6 +3,7 @@ using ProgressBankApp.Models;
 using ProgressBankApp.Repository;
 using ProgressBankApp.Views;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -11,7 +12,7 @@ namespace ProgressBankApp.ViewModels
     public class RegisterClientViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
 
         private string _surname;
         public string Surname
@@ -43,6 +44,28 @@ namespace ProgressBankApp.ViewModels
             {
                 _patronymic = value;
                 OnPropertyChanged(nameof(Patronymic));
+            }
+        }
+
+        private ObservableCollection<Gender> _genders;
+        public ObservableCollection<Gender> Genders
+        {
+            get => _genders;
+            set
+            {
+                _genders = value;
+                OnPropertyChanged(nameof(Genders));
+            }
+        }
+
+        private Gender _gender;
+        public Gender Gender
+        {
+            get => _gender;
+            set
+            {
+                _gender = value;
+                OnPropertyChanged(nameof(Gender));
             }
         }
 
@@ -128,6 +151,9 @@ namespace ProgressBankApp.ViewModels
 
         public RegisterClientViewModel()
         {
+            Genders = new ObservableCollection<Gender>(_userRepository.GetGenders());
+            Gender = Genders.FirstOrDefault();
+
             MainWindow.SetTitle("Регистрация клиента");
         }
 
@@ -142,6 +168,12 @@ namespace ProgressBankApp.ViewModels
 
         private void RegisterClient(object parameter)
         {
+            if (_userRepository.UserExists(Login))
+            {
+                DialogWindow.Show("Пользователь с таким логином уже существует");
+                return;
+            }
+
             User user = new User()
             {
                 Surname = Surname,
@@ -150,12 +182,13 @@ namespace ProgressBankApp.ViewModels
                 PassportSeries = Passport.ToString().Substring(0, 4),
                 PassportNumber = Passport.ToString().Substring(4, 6),
                 Address = Address,
+                Gender = Gender,
                 Phone = Phone,
                 Email = Email,
                 DateOfBirth = DateOfBirth,
                 Login = Login,
                 Password = Password,
-                Role = Role.Client
+                Role = _userRepository.GetClientRole()
             };
 
             _userRepository.CreateUser(user);
@@ -167,7 +200,7 @@ namespace ProgressBankApp.ViewModels
                 DateOpen = DateTime.Now,
                 Balance = 0,
                 User = _userRepository.GetClients().Last(),
-                Type = BankAccountType.Checking
+                Type = _accountRepository.GetCheckingType()
             };
 
             _accountRepository.CreateAccount(bankAccount);

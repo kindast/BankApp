@@ -1,8 +1,8 @@
 ﻿namespace ProgressBankApp.Models
 {
-    public enum Role
+    public class Role
     {
-        Manager,
-        Client
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -129,10 +129,11 @@
     <Compile Include="Models\BankAccountType.cs" />
     <Compile Include="Models\DepositRate.cs" />
     <Compile Include="Models\Deposit.cs" />
+    <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Repository\AccountRepository.cs" />
+    <Compile Include="Repository\BankAccountRepository.cs" />
     <Compile Include="Repository\DepositRepository.cs" />
     <Compile Include="Repository\DepositRateRepository.cs" />
     <Compile Include="Repository\UserRepository.cs" />

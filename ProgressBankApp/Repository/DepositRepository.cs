@@ -48,7 +48,7 @@ namespace ProgressBankApp.Repository
                 User = user,
                 DateOpen = DateTime.Now,
                 Balance = amount,
-                Type = BankAccountType.Deposit
+                Type = _context.BankAccountTypes.FirstOrDefault(t => t.Name == "Вклад")
             };
             _context.BankAccounts.Add(bankAccount);
 

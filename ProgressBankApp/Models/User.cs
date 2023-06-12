@@ -18,6 +18,7 @@ namespace ProgressBankApp.Models
         [Required]
         public string Surname { get; set; }
         public string Patronymic { get; set; }
+        public Gender Gender { get; set; }
         public string PassportSeries { get; set; }
         public string PassportNumber { get; set; }
         public string Address { get; set; }
@@ -30,9 +31,6 @@ namespace ProgressBankApp.Models
 
         [NotMapped]
         public string ShortName { get => $"{Surname} {Name.Substring(0, 1)}.{Patronymic.Substring(0, 1)}."; set => Name = Name; }
-
-        [NotMapped]
-        public string RoleName { get => Role == Role.Manager ? "Менеджер" : "Клиент"; }
 
         [NotMapped]
         public string Passport

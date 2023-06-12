@@ -28,7 +28,11 @@
         </Grid.RowDefinitions>
         <Grid Background="White">
             <TextBlock Text="ТАРИФЫ ВКЛАДОВ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0"/>
-            <Button Content="Добавить" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0" Command="{Binding OpenAddEditDepositRatePageCommand}"/>
+            <Button HorizontalAlignment="Right" Width="35" Height="35" VerticalAlignment="Center" Margin="16,0" Command="{Binding OpenAddEditDepositRatePageCommand}">
+                <Button.Content>
+                    <Image Source="{StaticResource IconAdd}"/>
+                </Button.Content>
+            </Button>
         </Grid>
         <DataGrid Grid.Row="1" ItemsSource="{Binding DepositRates}" AlternationCount="2" SelectionMode="Single" AutoGenerateColumns="False" CanUserSortColumns="False" 
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" CanUserResizeColumns="False">

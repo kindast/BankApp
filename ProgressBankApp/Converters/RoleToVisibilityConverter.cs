@@ -10,7 +10,10 @@ namespace ProgressBankApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (Role)value == (Role)parameter ? Visibility.Visible : Visibility.Collapsed;
+            if (value == null || parameter == null)
+                return Visibility.Collapsed;
+
+            return (value as Role).Name == parameter.ToString() ? Visibility.Visible : Visibility.Collapsed; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

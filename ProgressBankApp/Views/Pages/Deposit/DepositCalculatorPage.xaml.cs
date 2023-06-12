@@ -14,7 +14,7 @@ namespace ProgressBankApp.Views
     public partial class DepositCalculatorPage : Page
     {
         private DepositCalculatorViewModel _viewModel;
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
 
         public DepositCalculatorPage()

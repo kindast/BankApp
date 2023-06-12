@@ -7,6 +7,7 @@
         xmlns:models="clr-namespace:ProgressBankApp.Models"
         xmlns:conv="clr-namespace:ProgressBankApp.Converters"
         xmlns:uc="clr-namespace:ProgressBankApp.UserControls" 
+        xmlns:sys="clr-namespace:System;assembly=System" 
         mc:Ignorable="d"
         Title="ПрогрессБанк" 
         MinWidth="1200" 
@@ -40,31 +41,31 @@
                 <StackPanel Margin="0,50,0,0">
                     <Menu>
                         <MenuItem Command="{Binding OpenClientsPageCommand}" 
-                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Manager}}">
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Менеджер'}">
                             <MenuItem.Header>
                                 <uc:MenuButton Text="Клиенты" Source="{StaticResource IconClients}"/>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding OpenAccountsPageCommand}"
-                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Клиент'}">
                             <MenuItem.Header>
                                 <uc:MenuButton Text="Счета" Source="{StaticResource IconWallet}"/>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding OpenDepositsPageCommand}"
-                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Клиент'}">
                             <MenuItem.Header>
                                 <uc:MenuButton Text="Вклады" Source="{StaticResource IconDeposit}"/>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding OpenDepositRatesPageCommand}"
-                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Manager}}">
+                                  Visibility="{Binding User.Role, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Менеджер'}">
                             <MenuItem.Header>
                                 <uc:MenuButton Text="Тарифы вкладов" Source="{StaticResource IconDeposit}"/>
                             </MenuItem.Header>
                         </MenuItem>
                         <MenuItem Command="{Binding OpenProfilePageCommand}"
-                                  Visibility="{Binding User.Role, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter={x:Static models:Role.Client}}">
+                                  Visibility="{Binding User.Role, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource RoleToVisibilityConverter}, ConverterParameter='Клиент'}">
                             <MenuItem.Header>
                                 <uc:MenuButton Text="Профиль" Source="{StaticResource IconProfile}"/>
                             </MenuItem.Header>
@@ -77,7 +78,7 @@
                     <Image Source="/Resources/Images/Avatar.png" Height="40" Width="40" HorizontalAlignment="Left"/>
                     <StackPanel VerticalAlignment="Center" Margin="10,0,0,0">
                         <TextBlock Text="{Binding User.ShortName}" Style="{StaticResource SemiBold}"/>
-                        <TextBlock Text="{Binding User.RoleName }" Style="{StaticResource Regular}"/>
+                        <TextBlock Text="{Binding User.Role.Name }" Style="{StaticResource Regular}"/>
                     </StackPanel>
                 </StackPanel>
                 <Button Content="Выйти" Margin="10,0,10,10" Command="{Binding SignOutCommand}"/>

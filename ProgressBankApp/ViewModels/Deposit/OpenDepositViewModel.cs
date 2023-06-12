@@ -10,7 +10,7 @@ namespace ProgressBankApp.ViewModels
 {
     public class OpenDepositViewModel : ViewModel
     {
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
 
         private ObservableCollection<BankAccount> _bankAccounts;

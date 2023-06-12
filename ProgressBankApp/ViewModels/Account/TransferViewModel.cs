@@ -13,7 +13,7 @@ namespace ProgressBankApp.ViewModels
     public class TransferViewModel : ViewModel
     {
         private Window _transferWindow;
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
         private List<BankAccount> _bankAccounts;
         private List<Deposit> _deposits;

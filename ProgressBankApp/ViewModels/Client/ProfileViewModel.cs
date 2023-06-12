@@ -14,7 +14,7 @@ namespace ProgressBankApp.ViewModels
     public class ProfileViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
         private Chart _chart;
 

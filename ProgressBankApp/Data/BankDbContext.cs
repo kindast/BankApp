@@ -21,5 +21,8 @@ namespace ProgressBankApp.Data
         public DbSet<History> Histories { get; set; }
         public DbSet<Deposit> Deposits { get; set; }
         public DbSet<DepositRate> DepositsRates { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<BankAccountType> BankAccountTypes { get; set; }
+        public DbSet<Gender> Genders { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace ProgressBankApp.ViewModels
         {
             User = _userRepository.GetUser(CurrentUser.Id);
             _mainWindow = mainWindow;
-            if (User.Role == Role.Client)
+            if (User.Role == _userRepository.GetClientRole())
                 CurrentPage = new AccountsPage();
             else
                 CurrentPage = new ClientsPage();

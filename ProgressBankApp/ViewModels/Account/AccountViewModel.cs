@@ -12,7 +12,7 @@ namespace ProgressBankApp.ViewModels
     {
         private BankAccount _bankAccount;
         private AccountsViewModel _accountsViewModel;
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
 
         public BankAccount BankAccount
         {

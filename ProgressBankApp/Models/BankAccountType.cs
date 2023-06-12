@@ -1,8 +1,8 @@
 ﻿namespace ProgressBankApp.Models
 {
-    public enum BankAccountType
+    public class BankAccountType
     {
-        Checking,
-        Deposit
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="/Styles/TextBox.xaml"/>
                 <ResourceDictionary Source="/Styles/Button.xaml"/>
                 <ResourceDictionary Source="/Styles/DatePicker.xaml"/>
+                <ResourceDictionary Source="/Styles/ComboBox.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -51,6 +52,11 @@
                         <TextBlock Text="АДРЕС ПРОЖИВАНИЯ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
                         <TextBox Text="{Binding Address, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="100"/>
 
+                        <TextBlock Text="ПОЛ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <ComboBox ItemsSource="{Binding Genders}" SelectedValue="{Binding Gender, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0"
+                                  DisplayMemberPath="Name"/>
+
+
                         <Button Content="Добавить" Margin="0,25,0,0" Command="{Binding RegisterClientCommand}"/>
                     </StackPanel>
                     <StackPanel Width="300" Margin="25,0,0,0">
@@ -65,13 +71,13 @@
                                 DisplayDateStart="{Binding DateStart}"
                                 DisplayDateEnd="{Binding DateEnd}"/>
 
-                        <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
+                        <TextBlock Text="ЛОГИН" Style="{StaticResource FieldLabel}" Margin="0,22,0,0"/>
                         <TextBox Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
                         <TextBlock Text="ПАРОЛЬ" Style="{StaticResource FieldLabel}" Margin="0,25,0,0"/>
                         <TextBox Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" MaxLength="30"/>
 
-                        <Button Content="Отмена" Command="{Binding CancelRegisterCommand}" Margin="0,25,0,0"/>
+                        <Button Content="Отмена" Command="{Binding CancelRegisterCommand}" Margin="0,110,0,0"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

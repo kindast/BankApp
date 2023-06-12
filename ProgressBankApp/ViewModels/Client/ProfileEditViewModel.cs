@@ -12,7 +12,7 @@ namespace ProgressBankApp.ViewModels
     public class ProfileEditViewModel : ViewModel
     {
         private UserRepository _userRepository = new UserRepository();
-        private AccountRepository _accountRepository = new AccountRepository();
+        private BankAccountRepository _accountRepository = new BankAccountRepository();
         private DepositRepository _depositRepository = new DepositRepository();
 
         public DateTime DateStart { get => DateTime.Now.AddYears(-100); set { } }
@@ -26,6 +26,17 @@ namespace ProgressBankApp.ViewModels
             {
                 _user = value;
                 OnPropertyChanged(nameof(User));
+            }
+        }
+
+        private ObservableCollection<Gender> _genders;
+        public ObservableCollection<Gender> Genders
+        {
+            get => _genders;
+            set
+            {
+                _genders = value;
+                OnPropertyChanged(nameof(Genders));
             }
         }
 
@@ -53,6 +64,7 @@ namespace ProgressBankApp.ViewModels
 
         public ProfileEditViewModel(int userId)
         {
+            Genders = new ObservableCollection<Gender>(_userRepository.GetGenders());
             User = _userRepository.GetUser(userId);
             BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(userId));
             Deposits = new ObservableCollection<Deposit>(_depositRepository.GetDeposits(userId));
@@ -100,7 +112,7 @@ namespace ProgressBankApp.ViewModels
                 DateOpen = DateTime.Now,
                 Balance = 0,
                 User = User,
-                Type = BankAccountType.Checking
+                Type = _accountRepository.GetCheckingType()
             };
 
             _accountRepository.CreateAccount(bankAccount);

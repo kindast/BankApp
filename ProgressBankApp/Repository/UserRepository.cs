@@ -2,6 +2,7 @@
 using ProgressBankApp.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 
 namespace ProgressBankApp.Repository
 {
@@ -14,6 +15,11 @@ namespace ProgressBankApp.Repository
             _context = BankDbContext.GetContext();
         }
 
+        public bool UserExists(string login)
+        {
+            return _context.Users.Any(u => u.Login == login);
+        }
+        
         public bool UserExists(string login, string password)
         {
             return _context.Users.Any(u => u.Login == login && u.Password == password);
@@ -21,22 +27,37 @@ namespace ProgressBankApp.Repository
 
         public ICollection<User> GetUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(u => u.Gender).Include(u => u.Role).ToList();
         }
 
         public ICollection<User> GetClients()
         {
-            return _context.Users.Where(u => u.Role == Role.Client).ToList();
+            return _context.Users.Include(u => u.Gender).Include(u => u.Role).Where(u => u.Role.Name == "Клиент").ToList();
         }
 
         public User GetUser(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return _context.Users.Include(u => u.Gender).Include(u => u.Role).FirstOrDefault(u => u.Id == id);
         }
 
         public User GetUser(string login)
         {
-            return _context.Users.FirstOrDefault(u => u.Login == login);
+            return _context.Users.Include(u => u.Gender).Include(u => u.Role).FirstOrDefault(u => u.Login == login);
+        }
+
+        public Role GetClientRole()
+        {
+            return _context.Roles.FirstOrDefault(r => r.Name == "Клиент");
+        }
+
+        public Role GetManagerRole()
+        {
+            return _context.Roles.FirstOrDefault(r => r.Name == "Менеджер");
+        }
+
+        public ICollection<Gender> GetGenders()
+        {
+            return _context.Genders.ToList();
         }
 
         public bool CreateUser(User user)

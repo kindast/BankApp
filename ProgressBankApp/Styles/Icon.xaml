@@ -28,6 +28,22 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
+    <DrawingImage x:Key="IconProfileWhite">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V19 H18 V0 H0 Z">
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M18,19z M0,0z M4.5,4.5C4.5,6.981 6.519,9 9,9 11.481,9 13.5,6.981 13.5,4.5 13.5,2.019 11.481,0 9,0 6.519,0 4.5,2.019 4.5,4.5z M17,19L18,19 18,18C18,14.141,14.859,11,11,11L7,11C3.14,11,0,14.141,0,18L0,19 17,19z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="IconAdd">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V14 H14 V0 H0 Z">
+                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1 M14,14z M0,0z M13,8L8,8 8,13C8,13.55 7.55,14 7,14 6.45,14 6,13.55 6,13L6,8 1,8C0.45,8 0,7.55 0,7 0,6.45 0.45,6 1,6L6,6 6,1C6,0.45 6.45,0 7,0 7.55,0 8,0.45 8,1L8,6 13,6C13.55,6 14,6.45 14,7 14,7.55 13.55,8 13,8z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <DrawingImage x:Key="IconClients">
         <DrawingImage.Drawing>
             <DrawingGroup ClipGeometry="M0,0 V170 H256 V0 H0 Z">

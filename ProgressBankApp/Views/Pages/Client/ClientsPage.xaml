@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="/Styles/Button.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBox.xaml"/>
+                <ResourceDictionary Source="/Styles/Icon.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
         </ResourceDictionary>
@@ -29,7 +30,11 @@
             <TextBlock Text="КЛИЕНТЫ" Style="{StaticResource FieldLabel}" FontSize="15" VerticalAlignment="Center" Margin="16,0"/>
             <TextBox Text="{Binding Search, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Width="250"
                      Tag="Поиск..." Style="{StaticResource PlaceholderTextBox}"/>
-            <Button Content="Добавить" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0" Command="{Binding OpenRegisterClientPageCommand}"/>
+            <Button HorizontalAlignment="Right" Width="35" Height="35" VerticalAlignment="Center" Margin="16,0" Command="{Binding OpenRegisterClientPageCommand}">
+                <Button.Content>
+                    <Image Source="{StaticResource IconAdd}"/>
+                </Button.Content>
+            </Button>
         </Grid>
         <Grid Grid.Row="1">
             <DataGrid ItemsSource="{Binding Clients}" AlternationCount="2" SelectionMode="Single" AutoGenerateColumns="False" CanUserSortColumns="False" 
@@ -43,7 +48,11 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="btnEditProfile" Click="btnEditProfile_Click" Content="Профиль"/>
+                                <Button Width="35" Height="35" x:Name="btnEditProfile" Click="btnEditProfile_Click">
+                                    <Button.Content>
+                                        <Image Source="{StaticResource IconProfileWhite}"/>
+                                    </Button.Content>
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

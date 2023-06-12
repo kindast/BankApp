@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace ProgressBankApp.Repository
 {
-    public class AccountRepository
+    public class BankAccountRepository
     {
         private BankDbContext _context;
 
-        public AccountRepository()
+        public BankAccountRepository()
         {
             _context = BankDbContext.GetContext();
         }
@@ -23,12 +23,22 @@ namespace ProgressBankApp.Repository
 
         public ICollection<BankAccount> GetAccounts(int clientId)
         {
-            return _context.BankAccounts.Include(a => a.Histories).Where(a => a.User.Id == clientId && a.Type == BankAccountType.Checking).OrderBy(a => a.DateOpen).ToList();
+            return _context.BankAccounts.Include(a => a.Histories).Where(a => a.User.Id == clientId && a.Type.Name == "Расчетный").OrderBy(a => a.DateOpen).ToList();
         }
 
         public bool AccountExists(string number)
         {
             return _context.BankAccounts.Any(a => a.Number == number);
+        }
+
+        public BankAccountType GetCheckingType()
+        {
+            return _context.BankAccountTypes.FirstOrDefault(t => t.Name == "Расчетный");
+        }
+        
+        public BankAccountType GetDepositType()
+        {
+            return _context.BankAccountTypes.FirstOrDefault(t => t.Name == "Вклад");
         }
 
         public bool Transfer(BankAccount accountFrom, BankAccount accountTo, decimal amount)
