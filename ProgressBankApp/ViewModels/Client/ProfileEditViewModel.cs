@@ -116,7 +116,50 @@ namespace ProgressBankApp.ViewModels
             };
 
             _accountRepository.CreateAccount(bankAccount);
-            BankAccounts.Add(bankAccount);
+            BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(User.Id));
+        }
+
+        public void DeleteBankAccount(BankAccount bankAccount)
+        {
+            if (!DialogWindow.ShowYesNo("Вы уверены что хотите закрыть этот счет?"))
+                return;
+
+            if (bankAccount.Balance > 1 && BankAccounts.Count == 1)
+            {
+                DialogWindow.Show("Для удаления счета на нем не должно быть средств");
+                return;
+            }
+
+            if (bankAccount.Balance > 1 && BankAccounts.Count > 1)
+            {
+                var accountTo = BankAccounts.Where(a => a.Number != bankAccount.Number).FirstOrDefault();
+                if (accountTo != null)
+                    _accountRepository.Transfer(bankAccount, accountTo, bankAccount.Balance);
+                DialogWindow.Show($"Остаток средств был переведен на счет {accountTo.Number}");
+            }
+
+            _accountRepository.DeleteAccount(bankAccount);
+            BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(User.Id));
+        }
+
+        public void DeleteDeposit(Deposit deposit)
+        {
+            if (!DialogWindow.ShowYesNo("Вы уверены что хотите закрыть этот вклад?"))
+                return;
+
+            if (BankAccounts.Count == 0)
+            {
+                DialogWindow.Show("Нет счета на который можно перевести сумму вклада");
+                return;
+            }
+
+            var accountTo = BankAccounts.FirstOrDefault();
+            _accountRepository.Transfer(deposit.BankAccount, accountTo, deposit.BankAccount.Balance);
+            DialogWindow.Show($"Сумма вклада была переведена на счет {accountTo.Number}");
+
+            _depositRepository.DeleteDeposit(deposit);
+            Deposits = new ObservableCollection<Deposit>(_depositRepository.GetDeposits(User.Id));
+            BankAccounts = new ObservableCollection<BankAccount>(_accountRepository.GetAccounts(User.Id));
         }
 
         private void OpenClientsPage(object parameter)

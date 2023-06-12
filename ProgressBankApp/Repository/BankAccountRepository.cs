@@ -74,6 +74,12 @@ namespace ProgressBankApp.Repository
             return Save();
         }
 
+        public bool DeleteAccount(BankAccount bankAccount)
+        {
+            _context.BankAccounts.Remove(bankAccount);
+            return Save();
+        }
+
         public bool Save()
         {
             var saved = _context.SaveChanges();

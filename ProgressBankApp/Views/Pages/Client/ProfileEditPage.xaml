@@ -151,7 +151,7 @@
                                         <DataGridTemplateColumn>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button x:Name="btnDeleteAccount">
+                                                    <Button x:Name="btnDeleteAccount" Click="btnDeleteAccount_Click">
                                                         <Button.Content>
                                                             <Image Source="{StaticResource IconClose}"/>
                                                         </Button.Content>
@@ -177,7 +177,7 @@
                                         <DataGridTemplateColumn>
                                             <DataGridTemplateColumn.CellTemplate>
                                                 <DataTemplate>
-                                                    <Button x:Name="btnDeleteDeposit">
+                                                    <Button x:Name="btnDeleteDeposit" Click="btnDeleteDeposit_Click">
                                                         <Button.Content>
                                                             <Image Source="{StaticResource IconClose}"/>
                                                         </Button.Content>
