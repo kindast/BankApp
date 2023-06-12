@@ -1,0 +1,157 @@
+﻿<Page x:Class="ProgressBankApp.Views.DepositPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:ProgressBankApp.Views"
+      xmlns:conv="clr-namespace:ProgressBankApp.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="950" d:DesignWidth="800"
+      Title="DepositPage">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/TextBlock.xaml"/>
+                <ResourceDictionary Source="/Styles/TextBox.xaml"/>
+                <ResourceDictionary Source="/Styles/Button.xaml"/>
+                <ResourceDictionary Source="/Styles/DataGrid.xaml"/>
+                <ResourceDictionary Source="/Styles/ComboBox.xaml"/>
+                <ResourceDictionary Source="/Styles/Slider.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:AmountToColorConverter x:Key="AmountToColorConverter"/>
+            <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter"/>
+            <conv:DepositEndedToVisibilityConverter x:Key="DepositEndedToVisibilityConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Background="#E6EAF1">
+        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" >
+            <StackPanel Margin="32">
+                <StackPanel Orientation="Horizontal">
+                    <Border Background="White" Width="180" Height="90" CornerRadius="5">
+                        <Grid Margin="18">
+                            <TextBlock Text="СУММА ВКЛАДА" FontSize="10" Style="{StaticResource FieldLabel}" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding Deposit.BankAccount.FormattedBalance}" FontSize="20" Foreground="#4BB08E" Style="{StaticResource Bold}" VerticalAlignment="Bottom"/>
+                        </Grid>
+                    </Border>
+                    <Border Background="White" Width="220" Height="90" CornerRadius="5" Margin="10,0,0,0">
+                        <Grid Margin="18">
+                            <TextBlock Text="ПРОЦЕНТНАЯ СТАВКА" FontSize="10" Style="{StaticResource FieldLabel}" VerticalAlignment="Top"/>
+                            <TextBlock Text="{Binding Deposit.DepositRate.Percent, StringFormat={}{0}%}" FontSize="10" Style="{StaticResource SemiBold}" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                            <StackPanel VerticalAlignment="Bottom">
+                                <TextBlock Text="НАКОПЛЕНО ПРОЦЕНТОВ" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                <TextBlock Text="{Binding Deposit.FormattedAccumulated}" FontSize="16" Foreground="#4BB08E" Style="{StaticResource Bold}"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Grid Margin="10,0,0,0" Visibility="{Binding Deposit, Converter={StaticResource DepositEndedToVisibilityConverter}, ConverterParameter={x:Static sys:Boolean.FalseString}}">
+                        <Button Command="{Binding ReplenishDepositCommand}" Visibility="{Binding Deposit.DepositRate.IsReplenishment, Converter={StaticResource BoolToVisibilityConverter}}" Content="Пополнить" VerticalAlignment="Top"/>
+                        <Button Command="{Binding OpenTransferWindowCommand}" Visibility="{Binding Deposit.DepositRate.IsWithdrawal, Converter={StaticResource BoolToVisibilityConverter}}" Content="Перевести" VerticalAlignment="Bottom"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0" 
+                        Visibility="{Binding Deposit, Converter={StaticResource DepositEndedToVisibilityConverter}, ConverterParameter={x:Static sys:Boolean.TrueString}}">
+                    <Border Background="White" Width="486" Height="215" CornerRadius="5">
+                        <StackPanel Margin="18">
+                            <TextBlock Text="Вклад завершен" Style="{StaticResource Regular}"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                <StackPanel Width="230">
+                                    <TextBlock Text="ПЕРЕВЕСТИ НА СЧЕТ" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <ComboBox ItemsSource="{Binding BankAccounts}" SelectedValue="{Binding SelectedBankAccount}" Margin="0,10,0,0">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Name, StringFormat={}на {0}}"/>
+                                                    <TextBlock Text="{Binding FormattedBalance}" FontSize="16"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <Button Content="Перевести" Margin="0,25,0,0" Command="{Binding TransferCommand}"/>
+                                </StackPanel>
+                                <StackPanel Margin="20,0,0,0" Width="200">
+                                    <TextBlock Text="ПРОДЛИТЬ ВКЛАД НА" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Months, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} мес.}" Margin="0,10,0,0"/>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Slider Value="{Binding Months, UpdateSourceTrigger=PropertyChanged}" Minimum="3" Maximum="24" TickFrequency="1" IsSnapToTickEnabled="True" Grid.ColumnSpan="2"/>
+                                        <TextBlock Text="3 месяца" Style="{StaticResource FieldLabel}" FontWeight="Regular" Grid.Row="1" Margin="5,0,0,0" HorizontalAlignment="Left"/>
+                                        <TextBlock Text="24 месяца" Style="{StaticResource FieldLabel}" FontWeight="Regular" Grid.Row="1" Margin="0,0,5,0" HorizontalAlignment="Right"/>
+                                    </Grid>
+                                    <Button Content="Продлить" Margin="0,10,0,0" Command="{Binding RenewDepositCommand}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+                <Border Background="White" CornerRadius="5" Width="700" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Основная информация" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
+                        <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Margin="17,25,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="НАИМЕНОВАНИЕ ВКЛАДА" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Deposit.BankAccount.Name}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                                <StackPanel Margin="0,14,0,0">
+                                    <TextBlock Text="СТАТУС" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="Активен" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="11,25,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="НОМЕР СЧЕТА" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Deposit.BankAccount.Number}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                                <StackPanel Margin="0,14,0,0">
+                                    <TextBlock Text="ВЛАДЕЛЕЦ" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Deposit.BankAccount.User.ShortName}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="11,25,0,0">
+                                <StackPanel>
+                                    <TextBlock Text="ДАТА ОТКРЫТИЯ" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Deposit.BankAccount.DateOpen, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                                <StackPanel Margin="0,14,0,0">
+                                    <TextBlock Text="ДАТА ОКОНЧАНИЯ" FontSize="10" Style="{StaticResource FieldLabel}"/>
+                                    <TextBox Text="{Binding Deposit.DateExpiration, ConverterCulture='ru-RU', StringFormat={}{0:dd MMMM yyyy}}" Width="215" IsReadOnly="True" Margin="0,8,0,0" Style="{StaticResource ReadOnly}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                        <Button Content="Печать договора" Margin="17" Command="{Binding PrintDepositAgreementCommand}"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="White" CornerRadius="5" Width="700" Height="250" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Операции по счету" Style="{StaticResource SemiBold}" FontSize="13" Margin="17,10,17,0"/>
+                        <Rectangle Height="1" Fill="#EAEBEF" Margin="0,10,0,0"/>
+                        <Grid Margin="0,0,0,25">
+                            <DataGrid ItemsSource="{Binding Deposit.BankAccount.Histories}" AutoGenerateColumns="False" VerticalScrollBarVisibility="Auto" Height="195">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Дата и время" Binding="{Binding DateTime, ConverterCulture='ru-RU'}"/>
+                                    <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding FormattedAmount}" FontSize="13">
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource SemiBold}">
+                                                <Setter Property="Foreground" Value="{Binding Amount, Converter={StaticResource AmountToColorConverter}}"/>
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <TextBlock Text="Нет операций по счету" Visibility="{Binding Deposit.BankAccount.Histories.Count, Converter={StaticResource CountToVisibilityConverter}}"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="1" Style="{StaticResource Regular}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
